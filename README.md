@@ -18,6 +18,7 @@ Getting Started
 
 
 Next Steps: Planned future enhancements (icebox items)
+* turn peg squares to peg circles
 * Emoji version
 * Easy mode
 * Hard mode
