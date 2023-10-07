@@ -18,7 +18,12 @@ Getting Started
 
 
 Next Steps: Planned future enhancements (icebox items)
-* turn peg squares to peg circles
+* Turn peg squares to peg circles
 * Emoji version
 * Easy mode
 * Hard mode
+
+Credits
+* Jim Haff, instructor
+* Megan Barber, associate instructor
+* Hunter Long, TA

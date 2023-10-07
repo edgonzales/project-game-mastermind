@@ -1,0 +1,17 @@
+
+header{
+    text-align: center;
+}
+
+main{
+    display: grid;
+    grid-template-columns: 2fr 2fr 1fr;
+    grid-template-rows: 4fr 1fr;
+}
+
+table, tr, td{
+    border: 1px solid black;
+    border-collapse: separate;
+}
+
+
