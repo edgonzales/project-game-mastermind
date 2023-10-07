@@ -1,17 +1,22 @@
 
-header{
+h1{
     text-align: center;
+    background-color: #581C1C;
+    color: white;
 }
 
 main{
     display: grid;
     grid-template-columns: 2fr 2fr 1fr;
-    grid-template-rows: 4fr 1fr;
+    background-color: #581C1C;
+    color: white;
 }
 
 table, tr, td{
-    border: 1px solid black;
-    border-collapse: separate;
+    border: 1px solid white;
 }
 
-
+#bottom-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}

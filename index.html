@@ -10,22 +10,25 @@
 </head>
 
 <body>
-    <header>Master Mind</header>
+    <h1>Master Mind</h1>
     <main>
-        <div id="left-col">
-            <section id="peg-colors">Select Peg
-                <button></button>
-                <button></button>
-                <button></button>
-                <button></button>
-                <button></button>
-                <button></button>
-            </section>
-            <button>Check</button>
-            <button>Clear</button>
-            <button>Reset Game</button>
+        <div id="left-col" class="column">
+            <div id="actions">
+                <section id="peg-colors">Select Peg
+                    <button></button>
+                    <button></button>
+                    <button></button>
+                    <button></button>
+                    <button></button>
+                    <button></button>
+                </section>
+                <button>Check</button>
+                <button>Clear</button>
+                <button>Reset Game</button>
+            </div>
+            <div>Outcome</div>
         </div>
-        <div id="center-col">
+        <div id="center-col" class="column">
             <table id="guesses-grid">Guesses
                 <tr>
                     <td></td>
@@ -88,8 +91,16 @@
                     <td></td>
                 </tr>
             </table>
+            <table>Solution
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
         </div>
-        <div id="right-col">
+        <div id="right-col" class="column">
             <table id="clues-grid">Clues Grid
                 <tr>
                     <td></td>
@@ -172,10 +183,6 @@
                     <td></td>
                 </tr>
             </table>
-        </div>
-        <div id="bottom-row">
-            <div>Outcome</div>
-            <div>Solution</div>
         </div>
     </main>
 </body>
