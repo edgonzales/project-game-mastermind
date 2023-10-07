@@ -1,22 +1,26 @@
 
-h1{
-    text-align: center;
+body{
     background-color: #581C1C;
     color: white;
+
+}
+
+h1{
+    text-align: center;
 }
 
 main{
     display: grid;
-    grid-template-columns: 2fr 2fr 1fr;
-    background-color: #581C1C;
-    color: white;
+    grid-template-columns: 3fr 2fr 3fr;
+    margin-left: 20px;
 }
 
-table, tr, td{
-    border: 1px solid white;
+tr, td{
+    border: 1px solid black;
+    padding: 30px;
+    background-color: #D9D9D9;
 }
 
-#bottom-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+#clues-grid tr, #clues-grid td{
+    padding: 13px;
 }
