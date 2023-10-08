@@ -11,7 +11,7 @@
 
 <body>
     <h1>Master Mind</h1>
-    <main>
+    <main class="game-board">
         <div id="left-col" class="column">
             <div id="actions">
                 <section id="peg-colors">Select Peg
@@ -21,26 +21,26 @@
                                 <button class="peg-btn" id="select-red-peg"></button>
                             </td>
                             <td>
-                                <button class="peg-btn"></button>
+                                <button class="peg-btn" id="select-pink-peg"></button>
                             </td>
                             <td>
-                                <button class="peg-btn"></button>
+                                <button class="peg-btn" id="select-green-peg"></button>
                             </td>
                             <td>
-                                <button class="peg-btn"></button>
+                                <button class="peg-btn" id="select-blue-peg"></button>
                             </td>
                             <td>
-                                <button class="peg-btn"></button>
+                                <button class="peg-btn" id="select-purple-peg"></button>
                             </td>
                             <td>
-                                <button class="peg-btn"></button>
+                                <button class="peg-btn" id="select-yellow-peg"></button>
                             </td>
                         </tr>
                     </table>
                 </section>
-                <button>Check</button>
-                <button>Clear</button>
-                <button>Reset Game</button>
+                <button id="checkGuessBtn">Check</button>
+                <button id="clearGuessBtn">Clear</button>
+                <button id="resetGameBtn">Reset Game</button>
             </div>
             <div>Outcome</div>
         </div>

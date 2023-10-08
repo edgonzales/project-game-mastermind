@@ -50,7 +50,23 @@ table #center-col, table #right-col, table #solutions-grid{
 }
 
 #select-red-peg, #selected-red-peg {
-    background-color: red;
+    background-color: #BD1414;
+}
+
+#select-pink-peg{
+    background-color: #E85959;
+}
+#select-green-peg{
+    background-color: #298421;
+}
+#select-blue-peg{
+    background-color: #7E91D3;
+}
+#select-purple-peg{
+    background-color: #20146A;
+}
+#select-yellow-peg{
+    background-color: #EFCB0F;
 }
 
 .peg-sm-btn{
