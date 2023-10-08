@@ -15,12 +15,28 @@
         <div id="left-col" class="column">
             <div id="actions">
                 <section id="peg-colors">Select Peg
-                    <button></button>
-                    <button></button>
-                    <button></button>
-                    <button></button>
-                    <button></button>
-                    <button></button>
+                    <table id="select-peg-grid">
+                        <tr>
+                            <td>
+                                <button class="peg-btn" id="select-red-peg"></button>
+                            </td>
+                            <td>
+                                <button class="peg-btn"></button>
+                            </td>
+                            <td>
+                                <button class="peg-btn"></button>
+                            </td>
+                            <td>
+                                <button class="peg-btn"></button>
+                            </td>
+                            <td>
+                                <button class="peg-btn"></button>
+                            </td>
+                            <td>
+                                <button class="peg-btn"></button>
+                            </td>
+                        </tr>
+                    </table>
                 </section>
                 <button>Check</button>
                 <button>Clear</button>
@@ -31,7 +47,9 @@
         <div id="center-col" class="column">
             <table id="guesses-grid">Guesses
                 <tr>
-                    <td></td>
+                    <td>
+                        <button class="peg-btn" id="selected-red-peg"></button>
+                    </td>
                     <td></td>
                     <td></td>
                     <td></td>
@@ -91,7 +109,7 @@
                     <td></td>
                 </tr>
             </table>
-            <table>Solution
+            <table id="solutions-grid">Solution
                 <tr>
                     <td></td>
                     <td></td>
@@ -103,7 +121,9 @@
         <div id="right-col" class="column">
             <table id="clues-grid">Clues
                 <tr>
-                    <td></td>
+                    <td>
+                        <button class="peg-sm-btn" id="clue-black-peg"></button>
+                    </td>
                     <td></td>
                 </tr>
                 <tr>

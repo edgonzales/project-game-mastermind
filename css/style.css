@@ -2,7 +2,6 @@
 body{
     background-color: #581C1C;
     color: white;
-
 }
 
 h1{
@@ -16,11 +15,51 @@ main{
 }
 
 tr, td{
-    border: 1px solid black;
-    padding: 30px;
     background-color: #D9D9D9;
+}
+
+#select-peg-grid{
+    background-color: #D9D9D9;
+}
+
+.peg-btn{
+    border-radius: 50%;
+    border: none;
+    padding: 15px;
+}
+
+table #center-col, table #right-col, table #solutions-grid{
+    display: grid;
+    table-layout: fixed;
+    width: 100%;
+}
+
+#center-col tr, #center-col td{
+    padding: 30px;
+    border: 1px solid black;
+    word-wrap: break-word;
 }
 
 #clues-grid tr, #clues-grid td{
     padding: 13px;
+    border: 1px solid black;
 }
+
+#selected-red-peg {
+    padding: 15px;
+}
+
+#select-red-peg, #selected-red-peg {
+    background-color: red;
+}
+
+.peg-sm-btn{
+    border-radius: 50%;
+    border: none;
+    padding: 5px;
+}
+
+#clue-black-peg{
+    background-color: black;
+}
+

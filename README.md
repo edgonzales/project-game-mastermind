@@ -18,10 +18,10 @@ Getting Started
 
 
 Next Steps: Planned future enhancements (icebox items)
-* Turn peg squares to peg circles
-* Emoji version
-* Easy mode
-* Hard mode
+* Emoji version: use instead of pegs
+* Easy mode: less pegs
+* Hard mode: more pegs
+* Option to randomize peg colors
 
 Credits
 * Jim Haff, instructor
