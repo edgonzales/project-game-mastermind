@@ -1,15 +1,7 @@
   /*----- CONSTANTS -----*/
 const MAX_GUESSES = 10; // 1 guess = a set of 4 pegs
 const MAX_PEGS_PER_GUESS = 4; // guess = single row filled with pegs
-const RED = 1;
-const PINK = 2;
-const GREEN = 3;
-const BLUE = 4;
-const PURPLE = 5;
-const YELLOW = 6;
-const BLACK = 15;
-const WHITE = 10;
-const PEG_COLORS = [RED, PINK, GREEN, BLUE, PURPLE, YELLOW];
+const PEG_COLORS = ['red', 'pink', 'green', 'blue', 'purple', 'yellow'];
 
 
   /*----- STATE VARIABLES -----*/
@@ -93,16 +85,8 @@ const solutionsGridSquares = document.querySelectorAll('#solutions-grid tr td');
 
 // for every i, assign it a color based according to the PEG_COLORS array, based on the position 
 for (i of pegs) {
-    i.addEventListener('click', function(e) {
-        // change the board state array and push peg color to state
-        // if the e.target id includes red
-        if(e.target.id === 'red'){
-            guessesBoardState[0].shift();
-            guessesBoardState[0].push('RED');
-        }
-        console.log(guessesBoardState[0]);
-        })
-}    
+    i.addEventListener('click', handlePegSelection)
+}
 
   /*----- FUNCTIONS -----*/
 
@@ -120,6 +104,37 @@ function init(){
     console.log(secretSolution);
 }
 
+function handlePegSelection(e){
+ // change the board state array and push peg color to state
+// if the e.target id includes red
+// should be refactored to simplify algorithm
+    if(e.target.id === PEG_COLORS[0]){
+        guessesBoardState[0].shift();
+        guessesBoardState[0].push(PEG_COLORS[0]);
+    }
+    if(e.target.id === PEG_COLORS[1]){
+        guessesBoardState[0].shift();
+        guessesBoardState[0].push(PEG_COLORS[1]);
+    }
+    if(e.target.id === PEG_COLORS[2]){
+        guessesBoardState[0].shift();
+        guessesBoardState[0].push(PEG_COLORS[2]);
+    }
+    if(e.target.id === PEG_COLORS[3]){
+        guessesBoardState[0].shift();
+        guessesBoardState[0].push(PEG_COLORS[3]);
+    }
+    if(e.target.id === PEG_COLORS[4]){
+        guessesBoardState[0].shift();
+        guessesBoardState[0].push(PEG_COLORS[4]);
+    }
+    if(e.target.id === PEG_COLORS[5]){
+        guessesBoardState[0].shift();
+        guessesBoardState[0].push(PEG_COLORS[5]);
+    }
+    console.log(guessesBoardState[0]);
+    console.log(guessesBoardState[1]);
+    }
 
 /*
 handleGuessCheck() // <---- hardest part
