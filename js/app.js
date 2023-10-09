@@ -77,7 +77,7 @@ const solutionsGridSquares = document.querySelectorAll('#solutions-grid tr td');
   /*----- EVENT LISTENERS -----*/
 /*
   Add event listeners for the following actions  
-  - click on any peg 'square' ... for now
+  - REFINE. click on any peg btn
   - click on check button
   - click on clear button
   - clck on reset game button
@@ -88,6 +88,8 @@ for (i of pegs) {
     i.addEventListener('click', handlePegSelection)
 }
 
+checkGuessBtn.addEventListener('click', handleGuessCheck);
+
   /*----- FUNCTIONS -----*/
 
 init()
@@ -97,7 +99,7 @@ function init(){
     clueSquares;
     secretSolution = [];
     // select 4 random peg colors and store them in an array
-    for(let i = 0; i < PEG_COLORS.length; i++){
+    for(let i = 0; i < 4; i++){
         let randomPegColor = PEG_COLORS[(Math.floor(Math.random() * PEG_COLORS.length))];
         secretSolution.push(randomPegColor);
     }
@@ -136,12 +138,20 @@ function handlePegSelection(e){
     console.log(guessesBoardState[1]);
     }
 
-/*
-handleGuessCheck() // <---- hardest part
-- compare row of pegs against solution pegs by using the every() method
-    - if a peg and peg position matches solution pegs, then update a clue array element to '15' (BLACK)
-    - if a peg matches a solution peg, then update a clue array element to '10' (WHITE)
 
+// - compare row of pegs against solution pegs by using the every() method
+//     - if a peg and peg position matches solution pegs, then update a clue array element to '15' (BLACK)
+//     - if a peg matches a solution peg, then update a clue array element to '10' (WHITE)
+function handleGuessCheck(){
+    const compareGuessWithSolution = (a, b) =>
+    a.length === b.length &&
+    a.every((element, index) => element === b[index])
+    console.log(compareGuessWithSolution(guessesBoardState[0], secretSolution));
+}
+
+
+
+/*
 handleRowGuessClear()
 
 handleGameReset()
@@ -187,7 +197,9 @@ renderSolution()
     - Check btn, Clear btn, Reset Game btn display as a column
         - display: flex | flex-flow: column?
     - Non header text should be larger
--
+- JS
+    - refine handlePegSelection() to place selected peg color at the beginning, and then add to the following 
+    position
 
 
 ~~~~~~~~~~~USER STORIES~~~~~~~~~~~~~~~~~~
