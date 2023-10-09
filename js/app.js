@@ -1,15 +1,16 @@
   /*----- CONSTANTS -----*/
-
 const MAX_GUESSES = 10; // 1 guess = a set of 4 pegs
 const MAX_PEGS_PER_GUESS = 4; // guess = single row filled with pegs
-const PEG_COLORS = {
-    red: 1,
-    pink: 2, 
-    green: 3,
-    blue: 4,
-    purple: 5,
-    yellow: 6
-}
+const RED = 1;
+const PINK = 2;
+const GREEN = 3;
+const BLUE = 4;
+const PURPLE = 5;
+const YELLOW = 6;
+const BLACK = 15;
+const WHITE = 10;
+const PEG_COLORS = [RED, PINK, GREEN, BLUE, PURPLE, YELLOW];
+
 
   /*----- STATE VARIABLES -----*/
 /*
@@ -56,9 +57,7 @@ let clueSquares = [
     null, null,
 ]
 
-
 let solution; // random set of pegs the user is trying to guess
-
 let enableCheckButton = false; // may not need this??
 
 
@@ -102,16 +101,20 @@ init()
 function init(){
     guessesBoardState;
     clueSquares;
-    secretSolution; //<----- work on next
-    // solution = 
+    secretSolution = []; 
+    // select 4 random peg colors and store them in an array
+    for(let i = 0; i < PEG_COLORS.length; i++){
+        let randomPegColor = PEG_COLORS[(Math.floor(Math.random() * PEG_COLORS.length))];
+        secretSolution.push(randomPegColor);
+    }
+    console.log(secretSolution);
 }
 
 /*
-
 handlePegSelection()
   
 handleGuessCheck() // <---- hardest part
-- compare row of pegs against solution pegs
+- compare row of pegs against solution pegs by using the every() method
     - if a peg and peg position matches solution pegs, then update a clue cell to 'black'
     - if a peg matches a solution peg, then update a clue cell to 'white'
 
