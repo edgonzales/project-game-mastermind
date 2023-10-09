@@ -49,23 +49,23 @@ table #center-col, table #right-col, table #solutions-grid{
     padding: 15px;
 }
 
-#select-red-peg, #selected-red-peg {
+#red, #selected-red-peg {
     background-color: #BD1414;
 }
 
-#select-pink-peg{
+#pink{
     background-color: #E85959;
 }
-#select-green-peg{
+#green{
     background-color: #298421;
 }
-#select-blue-peg{
+#blue{
     background-color: #7E91D3;
 }
-#select-purple-peg{
+#purple{
     background-color: #20146A;
 }
-#select-yellow-peg{
+#yellow{
     background-color: #EFCB0F;
 }
 

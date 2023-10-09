@@ -91,8 +91,18 @@ const solutionsGridSquares = document.querySelectorAll('#solutions-grid tr td');
   - clck on reset game button
 */
 
-// pegs.addEventListener('click', handlePegsSelection);
-
+// for every i, assign it a color based according to the PEG_COLORS array, based on the position 
+for (i of pegs) {
+    i.addEventListener('click', function(e) {
+        // change the board state array and push peg color to state
+        // if the e.target id includes red
+        if(e.target.id === 'red'){
+            guessesBoardState[0].shift();
+            guessesBoardState[0].push('RED');
+        }
+        console.log(guessesBoardState[0]);
+        })
+}    
 
   /*----- FUNCTIONS -----*/
 
@@ -101,7 +111,7 @@ init()
 function init(){
     guessesBoardState;
     clueSquares;
-    secretSolution = []; 
+    secretSolution = [];
     // select 4 random peg colors and store them in an array
     for(let i = 0; i < PEG_COLORS.length; i++){
         let randomPegColor = PEG_COLORS[(Math.floor(Math.random() * PEG_COLORS.length))];
@@ -110,13 +120,12 @@ function init(){
     console.log(secretSolution);
 }
 
+
 /*
-handlePegSelection()
-  
 handleGuessCheck() // <---- hardest part
 - compare row of pegs against solution pegs by using the every() method
-    - if a peg and peg position matches solution pegs, then update a clue cell to 'black'
-    - if a peg matches a solution peg, then update a clue cell to 'white'
+    - if a peg and peg position matches solution pegs, then update a clue array element to '15' (BLACK)
+    - if a peg matches a solution peg, then update a clue array element to '10' (WHITE)
 
 handleRowGuessClear()
 
