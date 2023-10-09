@@ -2,6 +2,8 @@
 const MAX_GUESSES = 10; // 1 guess = a set of 4 pegs
 const MAX_PEGS_PER_GUESS = 4; // guess = single row filled with pegs
 const PEG_COLORS = ['red', 'pink', 'green', 'blue', 'purple', 'yellow'];
+const ROWS = 10, COLUMNS = 4;
+const INITIALVALUE = null;
 
 
   /*----- STATE VARIABLES -----*/
@@ -13,42 +15,8 @@ const PEG_COLORS = ['red', 'pink', 'green', 'blue', 'purple', 'yellow'];
 - DONE. check button, since this will be enabled only if a guess is complete 
 (4 pegs selected in 1 row): boolean false
 */
-let guessesBoardState = [
-    [null, null, null, null],
-    [null, null, null, null],
-    [null, null, null, null],
-    [null, null, null, null],
-    [null, null, null, null],
-    [null, null, null, null],
-    [null, null, null, null],
-    [null, null, null, null],
-    [null, null, null, null],
-    [null, null, null, null],
-]
-
-let clueSquares = [
-    null, null,
-    null, null,
-    null, null,
-    null, null,
-    null, null,
-    null, null,
-    null, null,
-    null, null,
-    null, null,
-    null, null,
-    null, null,
-    null, null,
-    null, null,
-    null, null,
-    null, null,
-    null, null,
-    null, null,
-    null, null,
-    null, null,
-    null, null,
-]
-
+let guessesBoardState;
+let cluesBoardState;
 let solution; // random set of pegs the user is trying to guess
 let enableCheckButton = false; // may not need this??
 
@@ -74,11 +42,12 @@ const guessesGridSquares = document.querySelectorAll('#guesses-grid tr td'); // 
 const cluesGridSquares = document.querySelectorAll('#clues-grid tr td');
 const solutionsGridSquares = document.querySelectorAll('#solutions-grid tr td');
 
+
   /*----- EVENT LISTENERS -----*/
 /*
   Add event listeners for the following actions  
   - REFINE. click on any peg btn
-  - click on check button
+  - REFINE. click on check button
   - click on clear button
   - clck on reset game button
 */
@@ -90,13 +59,30 @@ for (i of pegs) {
 
 checkGuessBtn.addEventListener('click', handleGuessCheck);
 
+clearGuessBtn.addEventListener('click', function(e){
+    guessesBoardState[0] = Array(4).fill(INITIALVALUE);
+    console.log(guessesBoardState[0]);
+})
+
+resetGameBtn.addEventListener('click', function(){
+    init();
+})
+
   /*----- FUNCTIONS -----*/
 
 init()
 
-function init(){
-    guessesBoardState;
-    clueSquares;
+function init(){    
+    guessesBoardState = Array(ROWS);
+    for (let i = 0; i < ROWS; i++) {
+        guessesBoardState[i] = Array(COLUMNS).fill(INITIALVALUE);
+    }
+
+    cluesBoardState = Array(ROWS);
+    for (let j = 0; j < ROWS; j++) {
+        cluesBoardState[j] = Array(COLUMNS).fill(INITIALVALUE);
+    }
+
     secretSolution = [];
     // select 4 random peg colors and store them in an array
     for(let i = 0; i < 4; i++){
@@ -135,7 +121,6 @@ function handlePegSelection(e){
         guessesBoardState[0].push(PEG_COLORS[5]);
     }
     console.log(guessesBoardState[0]);
-    console.log(guessesBoardState[1]);
     }
 
 
