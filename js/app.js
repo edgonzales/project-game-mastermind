@@ -2,7 +2,9 @@
 const MAX_GUESSES = 10; // 1 guess = a set of 4 pegs
 const MAX_PEGS_PER_GUESS = 4; // guess = single row filled with pegs
 const PEG_COLORS = ['red', 'pink', 'green', 'blue', 'purple', 'yellow'];
-const ROWS = 10, COLUMNS = 4;
+const CLUE_COLORS = ['black', 'white'];
+const ROWS = 10;
+const COLUMNS = 4;
 const INITIALVALUE = null;
 
 
@@ -38,9 +40,9 @@ const pegs = document.querySelectorAll('.peg-btn');
 const checkGuessBtn = document.querySelector('#checkGuessBtn');
 const clearGuessBtn = document.querySelector('#clearGuessBtn');
 const resetGameBtn = document.querySelector('#resetGameBtn');
-const guessesGridSquares = document.querySelectorAll('#guesses-grid tr td'); // I may need selected pegs
-const cluesGridSquares = document.querySelectorAll('#clues-grid tr td');
-const solutionsGridSquares = document.querySelectorAll('#solutions-grid tr td');
+const guessesGridSquares = document.querySelectorAll('.guesses-grid-square');
+const cluesGridSquares = document.querySelectorAll('.clues-grid-square');
+const solutionsGridSquares = document.querySelectorAll('.solutions-grid-square');
 
 
   /*----- EVENT LISTENERS -----*/
@@ -48,8 +50,8 @@ const solutionsGridSquares = document.querySelectorAll('#solutions-grid tr td');
   Add event listeners for the following actions  
   - REFINE. click on any peg btn
   - REFINE. click on check button
-  - click on clear button
-  - clck on reset game button
+  - REFINE. click on clear button
+  - DONE. clck on reset game button
 */
 
 // for every i, assign it a color based according to the PEG_COLORS array, based on the position 
@@ -59,7 +61,7 @@ for (i of pegs) {
 
 checkGuessBtn.addEventListener('click', handleGuessCheck);
 
-clearGuessBtn.addEventListener('click', function(e){
+clearGuessBtn.addEventListener('click', function(){
     guessesBoardState[0] = Array(4).fill(INITIALVALUE);
     console.log(guessesBoardState[0]);
 })
@@ -121,7 +123,8 @@ function handlePegSelection(e){
         guessesBoardState[0].push(PEG_COLORS[5]);
     }
     console.log(guessesBoardState[0]);
-    }
+    console.log(cluesBoardState[0]);
+}
 
 
 // - compare row of pegs against solution pegs by using the every() method
@@ -129,34 +132,29 @@ function handlePegSelection(e){
 //     - if a peg matches a solution peg, then update a clue array element to '10' (WHITE)
 function handleGuessCheck(){
     const compareGuessWithSolution = (a, b) =>
-    a.length === b.length &&
-    a.every((element, index) => element === b[index])
-    console.log(compareGuessWithSolution(guessesBoardState[0], secretSolution));
+        a.length === b.length &&
+        a.every((element, index) => element === b[index])
+
+    compareGuessWithSolution(guessesBoardState[0], secretSolution)
+    cluesBoardState[0] = Array(4).fill(CLUE_COLORS[0]);
+    console.log(cluesBoardState[0]);
 }
 
+function render() {
+    
+    
+    
+    // renderSelectedPegOnGuesses();
+    // renderClues();
+    // renderOutcomeMessages();
+    // renderSolution()
+}
 
+function renderSelectedPegOnGuesses(){ 
 
+}
 /*
-handleRowGuessClear()
 
-handleGameReset()
-
-
-render() {
-    renderBoard();
-    renderSelectedPegOnGuesses();
-    renderClues();
-    renderOutcomeMessages();
-    renderSolution()
-}
-
-renderBoard(){
-
-}
-
-renderSelectedPegOnGuesses(){
-    - 
-}
 
 renderClues() {
 
@@ -171,9 +169,6 @@ renderSolution()
 
 */
 /*
-~~~~~~~~~QUESTIONS~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
 ~~~~~~~~~TO-DO~~~~~~~~~~~~~~~~~~~~~~~~~~
 - CSS
     - freeze cells when btn/img changes
@@ -198,11 +193,15 @@ As a Player, I want to select a peg to add to a guess row
 As a Player, I want to check my guess so that I may gather clues for the solution
 - Limit 4 pegs per guess
   - Keep 'Check' button disabled until 4 pegs are selected
-- 
+- If guess is correct, then show the solution
+
 
 As a Player, I want to clear my guess so that I can add new pegs
 
 As a Player, I want to reset the game so that I can start a new game
 
 As a Player, I want to know the outcome of the game so that I know if I won
+-   Display Outcome message after each check
+    - Incorrect: 'Keep trying!'
+    - Correct: 'You guessed correctly!'
 */
