@@ -15,11 +15,11 @@ main{
 }
 
 tr, td{
-    background-color: #D9D9D9;
+    background-color: darkgrey;
 }
 
 #select-peg-grid{
-    background-color: #D9D9D9;
+    background-color: darkgrey;
 }
 
 .peg-btn{

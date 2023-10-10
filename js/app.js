@@ -19,7 +19,7 @@ const INITIALVALUE = null;
 */
 let guessesBoardState;
 let cluesBoardState;
-let solution; // random set of pegs the user is trying to guess
+let solutionBoardState;
 let enableCheckButton = false; // may not need this??
 
 
@@ -43,6 +43,7 @@ const resetGameBtn = document.querySelector('#resetGameBtn');
 const guessesGridSquares = document.querySelectorAll('#guesses-grid tr td');
 const cluesGridSquares = document.querySelectorAll('#clues-grid tr td');
 const solutionsGridSquares = document.querySelectorAll('#solutions-grid tr td');
+const mssgEl = document.querySelector('#msg');
 
 
   /*----- EVENT LISTENERS -----*/
@@ -85,13 +86,13 @@ function init(){
         cluesBoardState[j] = Array(COLUMNS).fill(INITIALVALUE);
     }
 
-    secretSolution = [];
+    solutionBoardState = [];
     // select 4 random peg colors and store them in an array
     for(let i = 0; i < 4; i++){
         let randomPegColor = PEG_COLORS[(Math.floor(Math.random() * PEG_COLORS.length))];
-        secretSolution.push(randomPegColor);
+        solutionBoardState.push(randomPegColor);
     }
-    console.log(secretSolution);
+    console.log(solutionBoardState);
 
     render();
 }
@@ -142,7 +143,7 @@ function handleGuessCheck(){
         a.length === b.length &&
         a.every((element, index) => element === b[index])
 
-    compareGuessWithSolution(guessesBoardState[0], secretSolution)
+    compareGuessWithSolution(guessesBoardState[0], solutionBoardState)
     cluesBoardState[0] = Array(4).fill(CLUE_COLORS[0]);
     console.log(cluesBoardState[0]);
     
@@ -154,8 +155,6 @@ function render() {
     renderSelectedPegOnGuessRow();
     renderClues();
 }
-    // renderOutcomeMessages();
-    // renderSolution()
 
 function renderSelectedPegOnGuessRow(){ 
     guessesGridSquares.forEach((squareEl, idx) => {
@@ -175,27 +174,43 @@ function renderSelectedPegOnGuessRow(){
     })
 }
     
-
+// combined with renderOutcome | separate them
 function renderClues() {
     cluesGridSquares.forEach((squareEl, idx) => {
         if(cluesBoardState[0][idx] === 'black'){
             squareEl.className = 'black';
+            renderSolution();
+            renderMessage('Your guess is correct! You Win!')
         } else if(cluesBoardState[0][idx] === 'white'){
             squareEl.className = 'white';
+            renderMessage('Your guess is incorrect, you lose.')
         }  
     })
 }
 
-/*
-renderOutcomeMessages(){
-    - if(lose) return message '...'
-    - if (win) return message '...'
+function renderMessage(msg){
+    mssgEl.innerText = msg;
 }
 
-renderSolution()
+function renderSolution(){
+    solutionsGridSquares.forEach((squareEl, idx) => {
+        if(solutionBoardState[idx] === 'red'){
+            squareEl.className = 'red';
+        } else if(solutionBoardState[idx] === 'pink'){
+            squareEl.className = 'pink';
+        } else if(solutionBoardState[idx] === 'green'){
+            squareEl.className = 'green';
+        }else if(solutionBoardState[idx] === 'blue'){
+            squareEl.className = 'blue';
+        } else if(solutionBoardState[idx] === 'purple'){
+            squareEl.className = 'purple';
+        } else if(solutionBoardState[idx] === 'yellow'){
+            squareEl.className = 'yellow';
+        }
+    })
+}
 
 
-*/
 /*
 ~~~~~~~~~TO-DO~~~~~~~~~~~~~~~~~~~~~~~~~~
 - CSS
