@@ -49,24 +49,32 @@ table #center-col, table #right-col, table #solutions-grid{
     padding: 15px;
 }
 
-#red, #selected-red-peg {
+#red, .red{
     background-color: #BD1414;
 }
 
-#pink{
+#pink, .pink{
     background-color: #E85959;
 }
-#green{
+#green, .green{
     background-color: #298421;
 }
-#blue{
+#blue, .blue{
     background-color: #7E91D3;
 }
-#purple{
+#purple, .purple{
     background-color: #20146A;
 }
-#yellow{
+#yellow, .yellow{
     background-color: #EFCB0F;
+}
+
+.black{
+    background-color: black;
+}
+
+.white{
+    background-color: white;
 }
 
 .peg-sm-btn{

@@ -40,9 +40,9 @@ const pegs = document.querySelectorAll('.peg-btn');
 const checkGuessBtn = document.querySelector('#checkGuessBtn');
 const clearGuessBtn = document.querySelector('#clearGuessBtn');
 const resetGameBtn = document.querySelector('#resetGameBtn');
-const guessesGridSquares = document.querySelectorAll('.guesses-grid-square');
-const cluesGridSquares = document.querySelectorAll('.clues-grid-square');
-const solutionsGridSquares = document.querySelectorAll('.solutions-grid-square');
+const guessesGridSquares = document.querySelectorAll('#guesses-grid tr td');
+const cluesGridSquares = document.querySelectorAll('#clues-grid tr td');
+const solutionsGridSquares = document.querySelectorAll('#solutions-grid tr td');
 
 
   /*----- EVENT LISTENERS -----*/
@@ -92,12 +92,17 @@ function init(){
         secretSolution.push(randomPegColor);
     }
     console.log(secretSolution);
+
+    render();
 }
 
 function handlePegSelection(e){
  // change the board state array and push peg color to state
 // if the e.target id includes red
-// should be refactored to simplify algorithm
+// limit to 4 peg selections per guess | keep track of clicks or keep track of how many
+// guesses have been made?
+
+
     if(e.target.id === PEG_COLORS[0]){
         guessesBoardState[0].shift();
         guessesBoardState[0].push(PEG_COLORS[0]);
@@ -124,6 +129,8 @@ function handlePegSelection(e){
     }
     console.log(guessesBoardState[0]);
     console.log(cluesBoardState[0]);
+
+    render();
 }
 
 
@@ -138,27 +145,48 @@ function handleGuessCheck(){
     compareGuessWithSolution(guessesBoardState[0], secretSolution)
     cluesBoardState[0] = Array(4).fill(CLUE_COLORS[0]);
     console.log(cluesBoardState[0]);
+    
+    render();
 }
 
-function render() {
-    
-    
-    
-    // renderSelectedPegOnGuesses();
-    // renderClues();
+// iterate through guessesGridSquares. for each squareEl, if it's red, then add .red class etc...
+function render() {    
+    renderSelectedPegOnGuessRow();
+    renderClues();
+}
     // renderOutcomeMessages();
     // renderSolution()
+
+function renderSelectedPegOnGuessRow(){ 
+    guessesGridSquares.forEach((squareEl, idx) => {
+        if(guessesBoardState[0][idx] === 'red'){
+            squareEl.className = 'red';
+        } else if(guessesBoardState[0][idx] === 'pink'){
+            squareEl.className = 'pink';
+        } else if(guessesBoardState[0][idx] === 'green'){
+            squareEl.className = 'green';
+        }else if(guessesBoardState[0][idx] === 'blue'){
+            squareEl.className = 'blue';
+        } else if(guessesBoardState[0][idx] === 'purple'){
+            squareEl.className = 'purple';
+        } else if(guessesBoardState[0][idx] === 'yellow'){
+            squareEl.className = 'yellow';
+        }
+    })
+}
+    
+
+function renderClues() {
+    cluesGridSquares.forEach((squareEl, idx) => {
+        if(cluesBoardState[0][idx] === 'black'){
+            squareEl.className = 'black';
+        } else if(cluesBoardState[0][idx] === 'white'){
+            squareEl.className = 'white';
+        }  
+    })
 }
 
-function renderSelectedPegOnGuesses(){ 
-
-}
 /*
-
-
-renderClues() {
-
-}
 renderOutcomeMessages(){
     - if(lose) return message '...'
     - if (win) return message '...'
