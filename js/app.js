@@ -31,27 +31,16 @@ const mssgEl = document.querySelector('#msg');
 
 
   /*----- EVENT LISTENERS -----*/
-/*
-  Add event listeners for the following actions  
-  - REFINE. click on any peg btn
-  - REFINE. click on check button
-  - REFINE. click on clear button
-  - DONE. clck on reset game button
-*/
-
 // for every i, assign it a color based according to the PEG_COLORS array, based on the position 
 for (i of pegs) {
     i.addEventListener('click', handlePegSelection)
 }
 
 checkGuessBtn.addEventListener('click', handleGuessCheck);
+clearGuessBtn.addEventListener('click', handleClearGuess);
 
-clearGuessBtn.addEventListener('click', function(){
-    guessesBoardState[0] = Array(4).fill(INITIALVALUE);
-    console.log(guessesBoardState[0]);
-})
-
-resetGameBtn.addEventListener('click', init)
+// when resetting, the solution table should be cleared as well
+resetGameBtn.addEventListener('click', init);
 
 
   /*----- FUNCTIONS -----*/
@@ -79,9 +68,9 @@ function init(){
         let randomPegColor = PEG_COLORS[(Math.floor(Math.random() * PEG_COLORS.length))];
         solutionBoardState.push(randomPegColor);
     }
-    console.log(solutionBoardState);
 
     render();
+    console.log(solutionBoardState);
 }
 
 function handlePegSelection(e){
@@ -125,11 +114,18 @@ function handleGuessCheck(){
         a.length === b.length &&
         a.every((element, index) => element === b[index])
 
-    compareGuessWithSolution(guessesBoardState[0], solutionBoardState)
-    cluesBoardState[0] = Array(4).fill(CLUE_COLORS[0]);
+    if(compareGuessWithSolution(guessesBoardState[0], solutionBoardState)){
+        cluesBoardState[0] = Array(4).fill(CLUE_COLORS[0]);
+    }
     console.log(cluesBoardState[0]);
     
     render();
+}
+
+function handleClearGuess(){
+    guessesBoardState[0] = Array(4).fill(INITIALVALUE);
+    render();
+    console.log(guessesBoardState[0]);
 }
 
 
@@ -180,7 +176,6 @@ function renderMessage(msg){
     mssgEl.innerText = msg;
 }
 
-// 
 function renderSolution(){
     solutionsGridSquares.forEach((squareEl, idx) => {
         if(solutionBoardState[idx] === 'red'){
@@ -200,25 +195,17 @@ function renderSolution(){
         }
     })
 }
-
-function renderClearGuess(){
-    guessesGridSquares.forEach((squareEl, idx) => {
-        if(guessesBoardState[idx] === null){
-            squareEl.className = '';
-        }
-    })
-}
     /*
 ~~~~~~~~~~~USER STORIES~~~~~~~~~~~~~~~~~~
 MM-1 | As a Player, I want to see the board so that I can begin the game
-- CSS
-    - freeze cells when btn/img changes
-        - option: don't use btns, simply change the color of the cell/square
+- CSS/FE
     - Move 'Outcome' to the bottom of the screen
     - Check btn, Clear btn, Reset Game btn display as a column
         - display: flex | flex-flow: column?
     - Non header text should be larger
     - Set peg background-color to their actual title (i.e. red, green...)
+    - freeze cells when btn/img changes
+        - option: don't use btns, simply change the color of the cell/square
 
 MM-2 | As a Player, I want to select a peg to add to a guess row
 - DONE. Display 6 peg options of different colors
@@ -231,7 +218,7 @@ MM-3 | As a Player, I want to check my guess so that I may gather clues for the 
 - Limit 4 pegs per guess
     -DONE. Front end
     - Back end
-    - If guess is correct, then show the solution, else keep the solution hidden
+- If guess is correct, then show the solution, else keep the solution hidden
 - Compare row of pegs against solution pegs
     - Display white if peg color is correct but position is not
     - maybe by using the every() method or an algorithm where each corresponding element is compared based on
@@ -241,7 +228,10 @@ MM-3 | As a Player, I want to check my guess so that I may gather clues for the 
 - Keep 'Check' button disabled until 4 pegs are selected
 
 MM-4 | As a Player, I want to clear my guess so that I can add new pegs
-- Get renderClearGuess() to work
+- DONE. Clear a guess
+- Restrict: to only clearing 1 guess at a time
+- If clues are either black or white, when Player clicks on Clear, then it shall be 
+    applied to the following guess row
 
 MM-5 | As a Player, I want to reset the game so that I can start a new game
 - DONE. Reset 1 row + no clues
