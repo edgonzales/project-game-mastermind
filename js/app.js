@@ -51,27 +51,29 @@ clearGuessBtn.addEventListener('click', function(){
     console.log(guessesBoardState[0]);
 })
 
-resetGameBtn.addEventListener('click', function(){
-    init();
-})
+resetGameBtn.addEventListener('click', init)
 
 
   /*----- FUNCTIONS -----*/
 
 init()
 
-function init(){    
+function init(){
+    // set the state to null for all 40 td
     guessesBoardState = Array(ROWS);
     for (let i = 0; i < ROWS; i++) {
         guessesBoardState[i] = Array(COLUMNS).fill(INITIALVALUE);
     }
-
+    
+    // set the state to null for all 40 td
     cluesBoardState = Array(ROWS);
     for (let j = 0; j < ROWS; j++) {
         cluesBoardState[j] = Array(COLUMNS).fill(INITIALVALUE);
     }
 
+    // set the state to empty
     solutionBoardState = [];
+    
     // select 4 random peg colors and store them in an array
     for(let i = 0; i < 4; i++){
         let randomPegColor = PEG_COLORS[(Math.floor(Math.random() * PEG_COLORS.length))];
@@ -83,10 +85,8 @@ function init(){
 }
 
 function handlePegSelection(e){
- // change the board state array and push peg color to state
-// if the e.target id includes red
-// limit to 4 peg selections per guess | keep track of clicks or keep track of how many
-// guesses have been made?
+// update guessesBoardState. if the e.target id includes red, then update the guessesBoardState with that color
+// limit to 4 peg selections per guess
 
 
     if(e.target.id === PEG_COLORS[0]){
@@ -136,7 +136,6 @@ function handleGuessCheck(){
 function render() {    
     renderSelectedPegOnGuessRow();
     renderClues();
-    renderResetGame();
 }
 
 function renderSelectedPegOnGuessRow(){ 
@@ -153,11 +152,13 @@ function renderSelectedPegOnGuessRow(){
             squareEl.className = 'purple';
         } else if(guessesBoardState[0][idx] === 'yellow'){
             squareEl.className = 'yellow';
+        } else if(guessesBoardState[0][idx] === null) {
+            squareEl.className = '';
         }
     })
 }
     
-// combined with renderOutcome | separate them
+// rename to renderOutcome or extract renderOutcome (separation of concerns?)
 function renderClues() {
     cluesGridSquares.forEach((squareEl, idx) => {
         if(cluesBoardState[0][idx] === 'black'){
@@ -167,7 +168,11 @@ function renderClues() {
         } else if(cluesBoardState[0][idx] === 'white'){
             squareEl.className = 'white';
             renderMessage('Your guess is incorrect, you lose.')
-        }  
+        } 
+        else if(cluesBoardState[0][idx] === null){
+            squareEl.className = '';
+            renderMessage('');
+        } 
     })
 }
 
@@ -175,6 +180,7 @@ function renderMessage(msg){
     mssgEl.innerText = msg;
 }
 
+// 
 function renderSolution(){
     solutionsGridSquares.forEach((squareEl, idx) => {
         if(solutionBoardState[idx] === 'red'){
@@ -189,36 +195,20 @@ function renderSolution(){
             squareEl.className = 'purple';
         } else if(solutionBoardState[idx] === 'yellow'){
             squareEl.className = 'yellow';
+        } else if(solutionBoardState[idx] === null){
+            squareEl.className = '';
         }
     })
 }
 
 function renderClearGuess(){
-
-}
-
-function renderResetGame(){
     guessesGridSquares.forEach((squareEl, idx) => {
         if(guessesBoardState[idx] === null){
             squareEl.className = '';
         }
     })
-    
-    cluesGridSquares.forEach((squareEl, idx) => {
-        if(cluesBoardState[idx] === null){
-            squareEl.className = '';
-        }
-    })
-
-    // dont' need it when the solution is exposed, however, when solution is exposed, remove
-    // class name
-    solutionsGridSquares.forEach((squareEl) => {
-        squareEl.className = '';
-    })
 }
-
-
-/*
+    /*
 ~~~~~~~~~~~USER STORIES~~~~~~~~~~~~~~~~~~
 MM-1 | As a Player, I want to see the board so that I can begin the game
 - CSS
@@ -228,6 +218,7 @@ MM-1 | As a Player, I want to see the board so that I can begin the game
     - Check btn, Clear btn, Reset Game btn display as a column
         - display: flex | flex-flow: column?
     - Non header text should be larger
+    - Set peg background-color to their actual title (i.e. red, green...)
 
 MM-2 | As a Player, I want to select a peg to add to a guess row
 - DONE. Display 6 peg options of different colors
@@ -240,20 +231,25 @@ MM-3 | As a Player, I want to check my guess so that I may gather clues for the 
 - Limit 4 pegs per guess
     -DONE. Front end
     - Back end
-- Keep 'Check' button disabled until 4 pegs are selected
-- If guess is correct, then show the solution, else keep the solution hidden
+    - If guess is correct, then show the solution, else keep the solution hidden
 - Compare row of pegs against solution pegs
-    - Display white if ... maybe by using the every() method
+    - Display white if peg color is correct but position is not
+    - maybe by using the every() method or an algorithm where each corresponding element is compared based on
+        - a. Postion
+        - b. Color 
 - Only make check button clickable if guess is complete (4 pegs are selected) 
+- Keep 'Check' button disabled until 4 pegs are selected
 
 MM-4 | As a Player, I want to clear my guess so that I can add new pegs
 - Get renderClearGuess() to work
 
 MM-5 | As a Player, I want to reset the game so that I can start a new game
-- Get renderResetGame() to work
+- DONE. Reset 1 row + no clues
+- DONE. Reset 1 row + clues
+- Reset 1 row + clues + solution
 
 MM-6 | As a Player, I want to be able to guess no more than 10 times so that I can guess enough tries to gues the solution 
-- refine logic to allow more than 1 guess
+- Refine logic to allow more than 1 guess
 
 MM-7 | As a Player, I want to see a message whether I guessed correctly so that I know when the game ends
 -   Display Outcome message after each check
