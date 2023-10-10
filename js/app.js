@@ -19,7 +19,7 @@ let enableCheckButton = false; // may not need this??
 
   /*----- CACHED ELEMENTS  -----*/
 
-const gameBoard = document.querySelector('#game-board');
+const gameBoard = document.querySelector('#game-board'); //so far, not using. remove?
 const pegs = document.querySelectorAll('.peg-btn');
 const checkGuessBtn = document.querySelector('#checkGuessBtn');
 const clearGuessBtn = document.querySelector('#clearGuessBtn');
@@ -38,9 +38,7 @@ for (i of pegs) {
 
 checkGuessBtn.addEventListener('click', handleGuessCheck);
 clearGuessBtn.addEventListener('click', handleClearGuess);
-
-// when resetting, the solution table should be cleared as well
-resetGameBtn.addEventListener('click', init);
+resetGameBtn.addEventListener('click', handleResetGame);
 
 
   /*----- FUNCTIONS -----*/
@@ -75,7 +73,7 @@ function init(){
 
 function handlePegSelection(e){
 // update guessesBoardState. if the e.target id includes red, then update the guessesBoardState with that color
-// limit to 4 peg selections per guess
+// limit to the first 4 peg selections per guess
 
 
     if(e.target.id === PEG_COLORS[0]){
@@ -128,6 +126,12 @@ function handleClearGuess(){
     console.log(guessesBoardState[0]);
 }
 
+function handleResetGame(){ 
+    solutionsGridSquares.forEach((squareEl) => {
+        squareEl.className = '';
+    })
+    init();
+}
 
 function render() {    
     renderSelectedPegOnGuessRow();
@@ -236,7 +240,7 @@ MM-4 | As a Player, I want to clear my guess so that I can add new pegs
 MM-5 | As a Player, I want to reset the game so that I can start a new game
 - DONE. Reset 1 row + no clues
 - DONE. Reset 1 row + clues
-- Reset 1 row + clues + solution
+- DONE. Reset 1 row + clues + solution
 
 MM-6 | As a Player, I want to be able to guess no more than 10 times so that I can guess enough tries to gues the solution 
 - Refine logic to allow more than 1 guess
