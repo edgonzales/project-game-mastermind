@@ -1,4 +1,5 @@
   /*----- CONSTANTS -----*/
+
 const MAX_GUESSES = 10; // 1 guess = a set of 4 pegs
 const MAX_PEGS_PER_GUESS = 4; // guess = single row filled with pegs
 const PEG_COLORS = ['red', 'pink', 'green', 'blue', 'purple', 'yellow'];
@@ -9,14 +10,7 @@ const INITIALVALUE = null;
 
 
   /*----- STATE VARIABLES -----*/
-/*
-- DONE. guessesBoardState: array[null, ..., null]
-- DONE. clueSquares: array[null, ..., null]
-- outcome: array[null, win, loose]
-- DONE. solution: array = []
-- DONE. check button, since this will be enabled only if a guess is complete 
-(4 pegs selected in 1 row): boolean false
-*/
+
 let guessesBoardState;
 let cluesBoardState;
 let solutionBoardState;
@@ -24,17 +18,7 @@ let enableCheckButton = false; // may not need this??
 
 
   /*----- CACHED ELEMENTS  -----*/
-/*
-- DONE. gameboard
-- DONE. peg btns
-- DONE. guesses squares
-- DONE. clue squares
-- DONE. solution pegs
-- DONE. Check button
-- DONE. Clear button
-- DONE. Reset Game button
-- selected pegs???
-*/
+
 const gameBoard = document.querySelector('#game-board');
 const pegs = document.querySelectorAll('.peg-btn');
 const checkGuessBtn = document.querySelector('#checkGuessBtn');
@@ -70,6 +54,7 @@ clearGuessBtn.addEventListener('click', function(){
 resetGameBtn.addEventListener('click', function(){
     init();
 })
+
 
   /*----- FUNCTIONS -----*/
 
@@ -134,10 +119,7 @@ function handlePegSelection(e){
     render();
 }
 
-
-// - compare row of pegs against solution pegs by using the every() method
-//     - if a peg and peg position matches solution pegs, then update a clue array element to '15' (BLACK)
-//     - if a peg matches a solution peg, then update a clue array element to '10' (WHITE)
+// currently only checks if there's an exact match
 function handleGuessCheck(){
     const compareGuessWithSolution = (a, b) =>
         a.length === b.length &&
@@ -150,7 +132,7 @@ function handleGuessCheck(){
     render();
 }
 
-// iterate through guessesGridSquares. for each squareEl, if it's red, then add .red class etc...
+
 function render() {    
     renderSelectedPegOnGuessRow();
     renderClues();
@@ -237,38 +219,43 @@ function renderResetGame(){
 
 
 /*
-~~~~~~~~~TO-DO~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~USER STORIES~~~~~~~~~~~~~~~~~~
+MM-1 | As a Player, I want to see the board so that I can begin the game
 - CSS
     - freeze cells when btn/img changes
         - option: don't use btns, simply change the color of the cell/square
-    - Outcome to the bottom of the screen
+    - Move 'Outcome' to the bottom of the screen
     - Check btn, Clear btn, Reset Game btn display as a column
         - display: flex | flex-flow: column?
     - Non header text should be larger
-- JS
-    - refine handlePegSelection() to place selected peg color at the beginning, and then add to the following 
-    position
 
-
-~~~~~~~~~~~USER STORIES~~~~~~~~~~~~~~~~~~
-As a Player, I want to select a peg to add to a guess row
-- Display 6 peg options of different colors
+MM-2 | As a Player, I want to select a peg to add to a guess row
+- DONE. Display 6 peg options of different colors
+- DONE. When peg is selected, it shall display as part of a single guess in the guesses grid
 - When clicked, the peg color should display in the next available Guesses cell
-  - next available Guesses cell
     - if first cell doesn't have a null, then add it there, else if cell has null, the add it on a cell 
     with a null
 
-As a Player, I want to check my guess so that I may gather clues for the solution
+MM-3 | As a Player, I want to check my guess so that I may gather clues for the solution
 - Limit 4 pegs per guess
-  - Keep 'Check' button disabled until 4 pegs are selected
-- If guess is correct, then show the solution
+    -DONE. Front end
+    - Back end
+- Keep 'Check' button disabled until 4 pegs are selected
+- If guess is correct, then show the solution, else keep the solution hidden
+- Compare row of pegs against solution pegs
+    - Display white if ... maybe by using the every() method
+- Only make check button clickable if guess is complete (4 pegs are selected) 
 
+MM-4 | As a Player, I want to clear my guess so that I can add new pegs
+- Get renderClearGuess() to work
 
-As a Player, I want to clear my guess so that I can add new pegs
+MM-5 | As a Player, I want to reset the game so that I can start a new game
+- Get renderResetGame() to work
 
-As a Player, I want to reset the game so that I can start a new game
+MM-6 | As a Player, I want to be able to guess no more than 10 times so that I can guess enough tries to gues the solution 
+- refine logic to allow more than 1 guess
 
-As a Player, I want to know the outcome of the game so that I know if I won
+MM-7 | As a Player, I want to see a message whether I guessed correctly so that I know when the game ends
 -   Display Outcome message after each check
     - Incorrect: 'Keep trying!'
     - Correct: 'You guessed correctly!'
