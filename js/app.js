@@ -154,6 +154,7 @@ function handleGuessCheck(){
 function render() {    
     renderSelectedPegOnGuessRow();
     renderClues();
+    renderResetGame();
 }
 
 function renderSelectedPegOnGuessRow(){ 
@@ -207,6 +208,30 @@ function renderSolution(){
         } else if(solutionBoardState[idx] === 'yellow'){
             squareEl.className = 'yellow';
         }
+    })
+}
+
+function renderClearGuess(){
+
+}
+
+function renderResetGame(){
+    guessesGridSquares.forEach((squareEl, idx) => {
+        if(guessesBoardState[idx] === null){
+            squareEl.className = '';
+        }
+    })
+    
+    cluesGridSquares.forEach((squareEl, idx) => {
+        if(cluesBoardState[idx] === null){
+            squareEl.className = '';
+        }
+    })
+
+    // dont' need it when the solution is exposed, however, when solution is exposed, remove
+    // class name
+    solutionsGridSquares.forEach((squareEl) => {
+        squareEl.className = '';
     })
 }
 
