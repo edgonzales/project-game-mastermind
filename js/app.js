@@ -67,6 +67,8 @@ function init() {
         solutionBoardState.push(randomPegColor);
     }
 
+    checkGuessBtn.disabled = true;
+
     render();
     console.log(solutionBoardState);
 }
@@ -96,7 +98,11 @@ function handlePegSelection(e) {
     if (e.target.id === PEG_COLORS[5]) {
         rowIdx.splice(cellIdx, 1, PEG_COLORS[5]);
     }
-    console.log(guessesBoardState[0]);
+
+    if (!(rowIdx.includes(null))) {
+        checkGuessBtn.disabled = false;
+    }
+    console.log(rowIdx);
 
     render();
 }
@@ -114,12 +120,15 @@ function handleGuessCheck() {
         console.log('There is no redIndex in the guessesBoardState :(')
     }
 
-    let wrongColor;
-    let correctColorAndIndex;
-    let correctColor;
+    function correctColorIncludedInGuess() {
+
+    }
+
+    //use array.includes() 
+    let correctColorAndIndexInGuess;
 
     let pinkIndex = guessesBoardState.indexOf('pink');
-    let indexZero = guess
+    //let indexZero = guess
 
 
     const compareExactMatchGuessWithSolution = (a, b) =>
@@ -147,16 +156,22 @@ function handleGuessCheck() {
     - indexOf(): how to start the indexOf
     */
 
-    // if(compareExactMatchGuessWithSolution(guessesBoardState[0], solutionBoardState)){
-    //     cluesBoardState[0] = Array(4).fill(CLUE_COLORS[0]);
-    // } else if(findCommonElements(guessesBoardState[0], solutionBoardState)){
-    //     cluesBoardState[0] = Array(4).fill(CLUE_COLORS[1]);
-    // }
-
+    // temp logic
+    if (compareExactMatchGuessWithSolution(guessesBoardState[0], solutionBoardState)) {
+        cluesBoardState[0] = Array(4).fill(CLUE_COLORS[0]);
+        renderSolution();
+    } else if (findCommonElements(guessesBoardState[0], solutionBoardState)) {
+        cluesBoardState[0] = Array(4).fill(CLUE_COLORS[1]);
+    }
 
     console.log(cluesBoardState[0]);
 
     render();
+}
+
+// temp function
+function findCommonElements(arr1, arr2) {
+    return arr1.some(item => arr2.includes(item))
 }
 
 function handleClearGuess() {
@@ -206,7 +221,7 @@ function renderClues() {
             renderMessage('Your guess is correct! You Win!')
         } else if (cluesBoardState[0][idx] === 'white') {
             squareEl.className = 'white';
-            renderMessage('Your guess is incorrect, you lose.')
+            renderMessage('Hmm, almost got it. Try again!')
         }
         else if (cluesBoardState[0][idx] === null) {
             squareEl.className = '';
@@ -257,16 +272,16 @@ DONE. MM-2 | As a Player, I want to select a peg to add to a guess row
 - DONE. Display selected peg sequentially
 
 MM-3 | As a Player, I want to check my guess so that I may gather clues for the solution
-- Limit 4 pegs per guess
-    -DONE. Front end
-    - Back end
-- If guess is correct, then show the solution, else keep the solution hidden
+- DONE. Limit 4 pegs per guess
+    - DONE. Front end
+    - DONE. Back end
+- DONE. If guess is correct, then show the solution, else keep the solution hidden
 - Compare row of pegs against solution pegs
     - Display white if peg color is correct but position is not
     - maybe by using the every() method or an algorithm where each corresponding element is compared based on
         - a. Postion
         - b. Color 
-- Only make check button clickable if guess is complete (4 pegs are selected) 
+- DONE. If 4 pegs are selected, enable Check button, otherwise disable it. 
 - Keep 'Check' button disabled until 4 pegs are selected
 
 MM-4 | As a Player, I want to clear my guess so that I can add new pegs
