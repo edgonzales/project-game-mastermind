@@ -1,4 +1,4 @@
-  /*----- CONSTANTS -----*/
+/*----- CONSTANTS -----*/
 
 const MAX_GUESSES = 10; // 1 guess = a set of 4 pegs
 const MAX_PEGS_PER_GUESS = 4; // guess = single row filled with pegs
@@ -9,7 +9,7 @@ const COLUMNS = 4;
 const INITIALVALUE = null;
 
 
-  /*----- STATE VARIABLES -----*/
+/*----- STATE VARIABLES -----*/
 
 let guessesBoardState;
 let cluesBoardState;
@@ -17,7 +17,7 @@ let solutionBoardState;
 let enableCheckButton = false; // may not need this??
 
 
-  /*----- CACHED ELEMENTS  -----*/
+/*----- CACHED ELEMENTS  -----*/
 
 const gameBoard = document.querySelector('#game-board'); //so far, not using. remove?
 const pegs = document.querySelectorAll('.peg-btn');
@@ -30,7 +30,7 @@ const solutionsGridSquares = document.querySelectorAll('#solutions-grid tr td');
 const mssgEl = document.querySelector('#msg');
 
 
-  /*----- EVENT LISTENERS -----*/
+/*----- EVENT LISTENERS -----*/
 // for every i, assign it a color based according to the PEG_COLORS array, based on the position 
 for (i of pegs) {
     i.addEventListener('click', handlePegSelection)
@@ -41,17 +41,17 @@ clearGuessBtn.addEventListener('click', handleClearGuess);
 resetGameBtn.addEventListener('click', handleResetGame);
 
 
-  /*----- FUNCTIONS -----*/
+/*----- FUNCTIONS -----*/
 
 init()
 
-function init(){
+function init() {
     // set the state to null for all 40 td
     guessesBoardState = Array(ROWS);
     for (let i = 0; i < ROWS; i++) {
         guessesBoardState[i] = Array(COLUMNS).fill(INITIALVALUE);
     }
-    
+
     // set the state to null for all 40 td
     cluesBoardState = Array(ROWS);
     for (let j = 0; j < ROWS; j++) {
@@ -60,9 +60,9 @@ function init(){
 
     // set the state to empty
     solutionBoardState = [];
-    
+
     // select 4 random peg colors and store them in an array
-    for(let i = 0; i < 4; i++){
+    for (let i = 0; i < 4; i++) {
         let randomPegColor = PEG_COLORS[(Math.floor(Math.random() * PEG_COLORS.length))];
         solutionBoardState.push(randomPegColor);
     }
@@ -71,39 +71,38 @@ function init(){
     console.log(solutionBoardState);
 }
 
-function handlePegSelection(e){
-// update guessesBoardState. if the e.target id includes red, then update the guessesBoardState with that color
-// limit to the first 4 peg selections per guess
+function handlePegSelection(e) {
+    // update guessesBoardState. if the e.target id includes red, then update the guessesBoardState with that color
+    // limit to the first 4 peg selections per guess
 
-const rowIdx = guessesBoardState[0];
-const cellIdx = rowIdx.indexOf(null);
+    const rowIdx = guessesBoardState[0];
+    const cellIdx = rowIdx.indexOf(null);
 
-    if(e.target.id === PEG_COLORS[0]){
+    if (e.target.id === PEG_COLORS[0]) {
         rowIdx.splice(cellIdx, 1, PEG_COLORS[0]);
     }
-    if(e.target.id === PEG_COLORS[1]){
+    if (e.target.id === PEG_COLORS[1]) {
         rowIdx.splice(cellIdx, 1, PEG_COLORS[1]);
     }
-    if(e.target.id === PEG_COLORS[2]){
+    if (e.target.id === PEG_COLORS[2]) {
         rowIdx.splice(cellIdx, 1, PEG_COLORS[2]);
     }
-    if(e.target.id === PEG_COLORS[3]){
+    if (e.target.id === PEG_COLORS[3]) {
         rowIdx.splice(cellIdx, 1, PEG_COLORS[3]);
     }
-    if(e.target.id === PEG_COLORS[4]){
+    if (e.target.id === PEG_COLORS[4]) {
         rowIdx.splice(cellIdx, 1, PEG_COLORS[4]);
     }
-    if(e.target.id === PEG_COLORS[5]){
+    if (e.target.id === PEG_COLORS[5]) {
         rowIdx.splice(cellIdx, 1, PEG_COLORS[5]);
     }
     console.log(guessesBoardState[0]);
-    console.log(cluesBoardState[0]);
 
     render();
 }
 
 // currently only checks if there's an exact match
-function handleGuessCheck(){
+function handleGuessCheck() {
 
     console.log(guessesBoardState[0].find((element) => element === 'red'));
     //console.log(guessesBoardState[0].findIndex(element) => element === 'red'))// try this <-----
@@ -111,7 +110,7 @@ function handleGuessCheck(){
     let redIndex = guessesBoardState[0].indexOf('red');
     console.log(redIndex + 3);
 
-    if(redIndex === -1){
+    if (redIndex === -1) {
         console.log('There is no redIndex in the guessesBoardState :(')
     }
 
@@ -156,85 +155,85 @@ function handleGuessCheck(){
 
 
     console.log(cluesBoardState[0]);
-    
+
     render();
 }
 
-function handleClearGuess(){
+function handleClearGuess() {
     guessesBoardState[0] = Array(4).fill(INITIALVALUE);
     render();
     console.log(guessesBoardState[0]);
 }
 
-function handleResetGame(){ 
+function handleResetGame() {
     solutionsGridSquares.forEach((squareEl) => {
         squareEl.className = '';
     })
     init();
 }
 
-function render() {    
+function render() {
     renderSelectedPegOnGuessRow();
     renderClues();
 }
 
-function renderSelectedPegOnGuessRow(){ 
+function renderSelectedPegOnGuessRow() {
     guessesGridSquares.forEach((squareEl, idx) => {
-        if(guessesBoardState[0][idx] === 'red'){
+        if (guessesBoardState[0][idx] === 'red') {
             squareEl.className = 'red';
-        } else if(guessesBoardState[0][idx] === 'pink'){
+        } else if (guessesBoardState[0][idx] === 'pink') {
             squareEl.className = 'pink';
-        } else if(guessesBoardState[0][idx] === 'green'){
+        } else if (guessesBoardState[0][idx] === 'green') {
             squareEl.className = 'green';
-        }else if(guessesBoardState[0][idx] === 'blue'){
+        } else if (guessesBoardState[0][idx] === 'blue') {
             squareEl.className = 'blue';
-        } else if(guessesBoardState[0][idx] === 'purple'){
+        } else if (guessesBoardState[0][idx] === 'purple') {
             squareEl.className = 'purple';
-        } else if(guessesBoardState[0][idx] === 'yellow'){
+        } else if (guessesBoardState[0][idx] === 'yellow') {
             squareEl.className = 'yellow';
-        } else if(guessesBoardState[0][idx] === null) {
+        } else if (guessesBoardState[0][idx] === null) {
             squareEl.className = '';
         }
     })
 }
-    
+
 // rename to renderOutcome or extract renderOutcome (separation of concerns?)
 function renderClues() {
     cluesGridSquares.forEach((squareEl, idx) => {
-        if(cluesBoardState[0][idx] === 'black'){
+        if (cluesBoardState[0][idx] === 'black') {
             squareEl.className = 'black';
             renderSolution();
             renderMessage('Your guess is correct! You Win!')
-        } else if(cluesBoardState[0][idx] === 'white'){
+        } else if (cluesBoardState[0][idx] === 'white') {
             squareEl.className = 'white';
             renderMessage('Your guess is incorrect, you lose.')
-        } 
-        else if(cluesBoardState[0][idx] === null){
+        }
+        else if (cluesBoardState[0][idx] === null) {
             squareEl.className = '';
             renderMessage('');
         }
     })
 }
 
-function renderMessage(msg){
+function renderMessage(msg) {
     mssgEl.innerText = msg;
 }
 
-function renderSolution(){
+function renderSolution() {
     solutionsGridSquares.forEach((squareEl, idx) => {
-        if(solutionBoardState[idx] === 'red'){
+        if (solutionBoardState[idx] === 'red') {
             squareEl.className = 'red';
-        } else if(solutionBoardState[idx] === 'pink'){
+        } else if (solutionBoardState[idx] === 'pink') {
             squareEl.className = 'pink';
-        } else if(solutionBoardState[idx] === 'green'){
+        } else if (solutionBoardState[idx] === 'green') {
             squareEl.className = 'green';
-        }else if(solutionBoardState[idx] === 'blue'){
+        } else if (solutionBoardState[idx] === 'blue') {
             squareEl.className = 'blue';
-        } else if(solutionBoardState[idx] === 'purple'){
+        } else if (solutionBoardState[idx] === 'purple') {
             squareEl.className = 'purple';
-        } else if(solutionBoardState[idx] === 'yellow'){
+        } else if (solutionBoardState[idx] === 'yellow') {
             squareEl.className = 'yellow';
-        } else if(solutionBoardState[idx] === null){
+        } else if (solutionBoardState[idx] === null) {
             squareEl.className = '';
         }
     })
