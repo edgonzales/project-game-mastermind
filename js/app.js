@@ -75,30 +75,26 @@ function handlePegSelection(e){
 // update guessesBoardState. if the e.target id includes red, then update the guessesBoardState with that color
 // limit to the first 4 peg selections per guess
 
+const rowIdx = guessesBoardState[0];
+const cellIdx = rowIdx.indexOf(null);
 
     if(e.target.id === PEG_COLORS[0]){
-        guessesBoardState[0].shift();
-        guessesBoardState[0].push(PEG_COLORS[0]);
+        rowIdx.splice(cellIdx, 1, PEG_COLORS[0]);
     }
     if(e.target.id === PEG_COLORS[1]){
-        guessesBoardState[0].shift();
-        guessesBoardState[0].push(PEG_COLORS[1]);
+        rowIdx.splice(cellIdx, 1, PEG_COLORS[1]);
     }
     if(e.target.id === PEG_COLORS[2]){
-        guessesBoardState[0].shift();
-        guessesBoardState[0].push(PEG_COLORS[2]);
+        rowIdx.splice(cellIdx, 1, PEG_COLORS[2]);
     }
     if(e.target.id === PEG_COLORS[3]){
-        guessesBoardState[0].shift();
-        guessesBoardState[0].push(PEG_COLORS[3]);
+        rowIdx.splice(cellIdx, 1, PEG_COLORS[3]);
     }
     if(e.target.id === PEG_COLORS[4]){
-        guessesBoardState[0].shift();
-        guessesBoardState[0].push(PEG_COLORS[4]);
+        rowIdx.splice(cellIdx, 1, PEG_COLORS[4]);
     }
     if(e.target.id === PEG_COLORS[5]){
-        guessesBoardState[0].shift();
-        guessesBoardState[0].push(PEG_COLORS[5]);
+        rowIdx.splice(cellIdx, 1, PEG_COLORS[5]);
     }
     console.log(guessesBoardState[0]);
     console.log(cluesBoardState[0]);
@@ -108,13 +104,57 @@ function handlePegSelection(e){
 
 // currently only checks if there's an exact match
 function handleGuessCheck(){
-    const compareGuessWithSolution = (a, b) =>
+
+    console.log(guessesBoardState[0].find((element) => element === 'red'));
+    //console.log(guessesBoardState[0].findIndex(element) => element === 'red'))// try this <-----
+    console.log(guessesBoardState[0].indexOf('red'));
+    let redIndex = guessesBoardState[0].indexOf('red');
+    console.log(redIndex + 3);
+
+    if(redIndex === -1){
+        console.log('There is no redIndex in the guessesBoardState :(')
+    }
+
+    let wrongColor;
+    let correctColorAndIndex;
+    let correctColor;
+
+    let pinkIndex = guessesBoardState.indexOf('pink');
+    let indexZero = guess
+
+
+    const compareExactMatchGuessWithSolution = (a, b) =>
         a.length === b.length &&
         a.every((element, index) => element === b[index])
 
-    if(compareGuessWithSolution(guessesBoardState[0], solutionBoardState)){
-        cluesBoardState[0] = Array(4).fill(CLUE_COLORS[0]);
-    }
+    /*
+    Goal: compare the guess array by color and position against the solution array. update the cluesBoardState
+    accordingly
+
+    Scenario 1: guess array element matches soltion's element color and position ---> 'black'
+    - Loop. If the first element of the guess array === to the first element of the solution array, then fill clueBoardState
+    to 'Black', do  the same for the second element of the guess array...until the you get to the 4th element
+
+    Scneario 2: guess array element matches color found in any position ---> 'white'
+    - Array.includes. Use if conditional + array.includes for each color. If guess color is found in the solution,
+    then fill clueBoard to 'white'. Max amount of 'white' is 4.
+    
+    Notes from Hunter
+    - keep track of the correct and incorrect selections
+    - find()
+    - includes()
+    - track the guesses, to identify the duplicates. has this value already been used? if so, do not increase the 'match' count
+    - findIndex of 
+    - indexOf(): how to start the indexOf
+    */
+
+    // if(compareExactMatchGuessWithSolution(guessesBoardState[0], solutionBoardState)){
+    //     cluesBoardState[0] = Array(4).fill(CLUE_COLORS[0]);
+    // } else if(findCommonElements(guessesBoardState[0], solutionBoardState)){
+    //     cluesBoardState[0] = Array(4).fill(CLUE_COLORS[1]);
+    // }
+
+
     console.log(cluesBoardState[0]);
     
     render();
@@ -172,7 +212,7 @@ function renderClues() {
         else if(cluesBoardState[0][idx] === null){
             squareEl.className = '';
             renderMessage('');
-        } 
+        }
     })
 }
 
@@ -199,7 +239,8 @@ function renderSolution(){
         }
     })
 }
-    /*
+
+/*
 ~~~~~~~~~~~USER STORIES~~~~~~~~~~~~~~~~~~
 MM-1 | As a Player, I want to see the board so that I can begin the game
 - CSS/FE
@@ -211,12 +252,10 @@ MM-1 | As a Player, I want to see the board so that I can begin the game
     - freeze cells when btn/img changes
         - option: don't use btns, simply change the color of the cell/square
 
-MM-2 | As a Player, I want to select a peg to add to a guess row
+DONE. MM-2 | As a Player, I want to select a peg to add to a guess row
 - DONE. Display 6 peg options of different colors
 - DONE. When peg is selected, it shall display as part of a single guess in the guesses grid
-- When clicked, the peg color should display in the next available Guesses cell
-    - if first cell doesn't have a null, then add it there, else if cell has null, the add it on a cell 
-    with a null
+- DONE. Display selected peg sequentially
 
 MM-3 | As a Player, I want to check my guess so that I may gather clues for the solution
 - Limit 4 pegs per guess
@@ -245,7 +284,7 @@ MM-5 | As a Player, I want to reset the game so that I can start a new game
 MM-6 | As a Player, I want to be able to guess no more than 10 times so that I can guess enough tries to gues the solution 
 - Refine logic to allow more than 1 guess
 
-MM-7 | As a Player, I want to see a message whether I guessed correctly so that I know when the game ends
+DONE. MM-7 | As a Player, I want to see a message whether I guessed correctly so that I know when the game ends
 -   Display Outcome message after each check
     - Incorrect: 'Keep trying!'
     - Correct: 'You guessed correctly!'
