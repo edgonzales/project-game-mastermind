@@ -14,7 +14,6 @@ const INITIALVALUE = null;
 let guessesBoardState;
 let cluesBoardState;
 let solutionBoardState;
-let enableCheckButton = false; // may not need this??
 
 
 /*----- CACHED ELEMENTS  -----*/
@@ -102,51 +101,37 @@ function handlePegSelection(e) {
     if (!(rowIdx.includes(null))) {
         checkGuessBtn.disabled = false;
     }
-    console.log(rowIdx);
 
+    console.log(rowIdx);
     render();
 }
 
-// currently only checks if there's an exact match
+//console.log(guessesBoardState[0].find((element) => element === 'red'));
+//console.log(guessesBoardState[0].findIndex(element) => element === 'red'))// try this <-----
+//console.log(guessesBoardState[0].indexOf('red'));
+//let redIndex = guessesBoardState[0].indexOf('red');
+
+const clueOutcome = [0, 0, 0];
+
+function checkScore() {
+    guessesBoardState[0].forEach((guess, idx) => {
+        if (guess === solutionBoardState[idx]) {
+            clueOutcome[0]++;
+        } else if (solutionBoardState.includes(guess)) {
+            clueOutcome[1]++;
+        } else {
+            clueOutcome[2]++
+        }
+    })
+    cluesBoardState.push
+    console.log(score);
+}
+
 function handleGuessCheck() {
+    checkScore();
+    render();
 
-    console.log(guessesBoardState[0].find((element) => element === 'red'));
-    //console.log(guessesBoardState[0].findIndex(element) => element === 'red'))// try this <-----
-    console.log(guessesBoardState[0].indexOf('red'));
-    let redIndex = guessesBoardState[0].indexOf('red');
-    console.log(redIndex + 3);
-
-    if (redIndex === -1) {
-        console.log('There is no redIndex in the guessesBoardState :(')
-    }
-
-    function correctColorIncludedInGuess() {
-
-    }
-
-    //use array.includes() 
-    let correctColorAndIndexInGuess;
-
-    let pinkIndex = guessesBoardState.indexOf('pink');
-    //let indexZero = guess
-
-
-    const compareExactMatchGuessWithSolution = (a, b) =>
-        a.length === b.length &&
-        a.every((element, index) => element === b[index])
-
-    /*
-    Goal: compare the guess array by color and position against the solution array. update the cluesBoardState
-    accordingly
-
-    Scenario 1: guess array element matches soltion's element color and position ---> 'black'
-    - Loop. If the first element of the guess array === to the first element of the solution array, then fill clueBoardState
-    to 'Black', do  the same for the second element of the guess array...until the you get to the 4th element
-
-    Scneario 2: guess array element matches color found in any position ---> 'white'
-    - Array.includes. Use if conditional + array.includes for each color. If guess color is found in the solution,
-    then fill clueBoard to 'white'. Max amount of 'white' is 4.
-    
+    /*    
     Notes from Hunter
     - keep track of the correct and incorrect selections
     - find()
@@ -157,22 +142,21 @@ function handleGuessCheck() {
     */
 
     // temp logic
-    if (compareExactMatchGuessWithSolution(guessesBoardState[0], solutionBoardState)) {
-        cluesBoardState[0] = Array(4).fill(CLUE_COLORS[0]);
-        renderSolution();
-    } else if (findCommonElements(guessesBoardState[0], solutionBoardState)) {
-        cluesBoardState[0] = Array(4).fill(CLUE_COLORS[1]);
-    }
+    // const compareExactMatchGuessWithSolution = (a, b) =>
+    //     a.length === b.length &&
+    //     a.every((element, index) => element === b[index])
 
-    console.log(cluesBoardState[0]);
-
-    render();
+    // temp logic
+    // if (compareExactMatchGuessWithSolution(guessesBoardState[0], solutionBoardState)) {
+    //     cluesBoardState[0] = Array(4).fill(CLUE_COLORS[0]);
+    //     renderSolution();
+    // } 
 }
 
 // temp function
-function findCommonElements(arr1, arr2) {
-    return arr1.some(item => arr2.includes(item))
-}
+// function findCommonElements(arr1, arr2) {
+//     return arr1.some(item => arr2.includes(item))
+// }
 
 function handleClearGuess() {
     guessesBoardState[0] = Array(4).fill(INITIALVALUE);
@@ -217,15 +201,15 @@ function renderClues() {
     cluesGridSquares.forEach((squareEl, idx) => {
         if (cluesBoardState[0][idx] === 'black') {
             squareEl.className = 'black';
-            renderSolution();
-            renderMessage('Your guess is correct! You Win!')
+            //renderSolution();
+            //renderMessage('Your guess is correct! You Win!')
         } else if (cluesBoardState[0][idx] === 'white') {
             squareEl.className = 'white';
-            renderMessage('Hmm, almost got it. Try again!')
+            //renderMessage('Hmm, almost got it. Try again!')
         }
         else if (cluesBoardState[0][idx] === null) {
             squareEl.className = '';
-            renderMessage('');
+            //renderMessage('');
         }
     })
 }
@@ -277,18 +261,15 @@ MM-3 | As a Player, I want to check my guess so that I may gather clues for the 
     - DONE. Back end
 - DONE. If guess is correct, then show the solution, else keep the solution hidden
 - Compare row of pegs against solution pegs
-    - Display white if peg color is correct but position is not
-    - maybe by using the every() method or an algorithm where each corresponding element is compared based on
-        - a. Postion
-        - b. Color 
+    - Display white in a clues box if peg color is correct but position is not
+    - Display black in a clues box if peg color and position is correct
 - DONE. If 4 pegs are selected, enable Check button, otherwise disable it. 
-- Keep 'Check' button disabled until 4 pegs are selected
 
 MM-4 | As a Player, I want to clear my guess so that I can add new pegs
 - DONE. Clear a guess
 - Restrict: to only clearing 1 guess at a time
-- If clues are either black or white, when Player clicks on Clear, then it shall be 
-    applied to the following guess row
+- If clues are either black, white, or checked when Player clicks on Clear, then it shall be applied to the 
+    following guess row
 
 MM-5 | As a Player, I want to reset the game so that I can start a new game
 - DONE. Reset 1 row + no clues
