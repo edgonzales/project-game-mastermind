@@ -6,6 +6,7 @@ Mastermind is a board game with an interesting history (or rather a legend?). So
 
 Screenshot
 
+https://www.figma.com/file/l3PGyIkJLN9Xk0lWJ9J2dM/MasterMind-Wireframe?type=design&node-id=0%3A1&mode=design&t=k2t7cUgfo8BF5EWD-1
 
 Technologies Used
 * JavaScript
