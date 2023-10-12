@@ -14,6 +14,7 @@ const INITIALVALUE = null;
 let guessesBoardState;
 let cluesBoardState;
 let solutionBoardState;
+let clueOutcome;
 
 
 /*----- CACHED ELEMENTS  -----*/
@@ -59,6 +60,8 @@ function init() {
 
     // set the state to empty
     solutionBoardState = [];
+
+    clueOutcome = [0, 0, 0];
 
     // select 4 random peg colors and store them in an array
     for (let i = 0; i < 4; i++) {
@@ -111,24 +114,38 @@ function handlePegSelection(e) {
 //console.log(guessesBoardState[0].indexOf('red'));
 //let redIndex = guessesBoardState[0].indexOf('red');
 
-const clueOutcome = [0, 0, 0];
+const rowIdxClueBoard = cluesBoardState[0];
+const cellIdxClueBoard = rowIdxClueBoard.indexOf(null);
 
-function checkScore() {
+
+
+// YOU ARE HERE. MAKE SURE DUPLICATES ARE ACCOUNTED FOR
+function checkClueOutcome() {
+    previouslyGuessed = [];
     guessesBoardState[0].forEach((guess, idx) => {
         if (guess === solutionBoardState[idx]) {
             clueOutcome[0]++;
-        } else if (solutionBoardState.includes(guess)) {
+            // cluesBoardState[0].shift();
+            // cluesBoardState[0].push('black');
+        } else if (solutionBoardState.includes(guess) && !(previouslyGuessed.includes(guess))) {
+            previouslyGuessed.push(guess);
             clueOutcome[1]++;
+            // cluesBoardState[0].shift();
+            // cluesBoardState[0].push('white');
         } else {
             clueOutcome[2]++
         }
     })
-    cluesBoardState.push
-    console.log(score);
+    console.log(clueOutcome);
+    console.log(cluesBoardState[0]);
 }
 
+// an array within a function
+// string of red, next time 
+// includes 
+
 function handleGuessCheck() {
-    checkScore();
+    checkClueOutcome();
     render();
 
     /*    
