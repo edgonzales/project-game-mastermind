@@ -43,7 +43,7 @@ resetGameBtn.addEventListener('click', handleResetGame);
 
 /*----- FUNCTIONS -----*/
 
-init()
+init();
 
 function init() {
     // set the state to null for all 40 td
@@ -117,13 +117,11 @@ function handleGuessCheck() {
             clueOutcome[0]++;
             cluesBoardState[0].shift();
             cluesBoardState[0].push(CLUE_COLORS[0]);
-            //rowIdxClueBoard.splice(cellIdxClueBoard, 1, CLUE_COLORS[0])
         } else if (solutionBoardState.includes(guess) && !(previouslyGuessed.includes(guess))) {
             previouslyGuessed.push(guess);
             clueOutcome[1]++;
             cluesBoardState[0].shift();
             cluesBoardState[0].push(CLUE_COLORS[1]);
-            //rowIdxClueBoard.splice(cellIdxClueBoard, 1, CLUE_COLORS[1])
         } else {
             cluesBoardState[0].shift();
             cluesBoardState[0].push(null);
@@ -136,7 +134,11 @@ function handleGuessCheck() {
 }
 
 function handleClearGuess() {
-    guessesBoardState[0] = Array(4).fill(INITIALVALUE);
+    if (clueOutcome[0] === 0 && clueOutcome[1] === 0 && clueOutcome === 0) {
+        guessesBoardState[0] = Array(4).fill(INITIALVALUE);
+    } else {
+        console.log('Cannot clear the guess')
+    }
     render();
     console.log(guessesBoardState[0]);
 }
@@ -222,7 +224,7 @@ function renderGameOutcome() {
     } else if (clueOutcome[1] >= 1) {
         renderMessage('Hmm, almost got it. Try again!');
     } else {
-        renderMessage('')
+        renderMessage('');
     }
 }
 
