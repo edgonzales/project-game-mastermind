@@ -1,12 +1,12 @@
 /*----- CONSTANTS -----*/
 
 const MAX_GUESSES = 10; // 1 guess = a set of 4 pegs
-const MAX_PEGS_PER_GUESS = 4; // guess = single row filled with pegs
 const PEG_COLORS = ['red', 'pink', 'green', 'blue', 'purple', 'yellow'];
 const CLUE_COLORS = ['black', 'white'];
 const ROWS = 10;
 const COLUMNS = 4;
-const INITIALVALUE = null;
+const CLUES_OUTCOME_COLUMNS = 3;
+const INITIAL_VALUE = null;
 
 
 /*----- STATE VARIABLES -----*/
@@ -14,7 +14,8 @@ const INITIALVALUE = null;
 let guessesBoardState;
 let cluesBoardState;
 let solutionBoardState;
-let clueOutcome;
+let cluesOutcome;
+let currentBoardRow;
 
 
 /*----- CACHED ELEMENTS  -----*/
@@ -25,13 +26,14 @@ const checkGuessBtn = document.querySelector('#checkGuessBtn');
 const clearGuessBtn = document.querySelector('#clearGuessBtn');
 const resetGameBtn = document.querySelector('#resetGameBtn');
 const guessesGridSquares = document.querySelectorAll('#guesses-grid tr td');
+const guessesGridRows = document.querySelectorAll('.rows > td');
 const cluesGridSquares = document.querySelectorAll('#clues-grid tr td');
 const solutionsGridSquares = document.querySelectorAll('#solutions-grid tr td');
 const mssgEl = document.querySelector('#msg');
 
 
 /*----- EVENT LISTENERS -----*/
-// for every i, assign it a color based according to the PEG_COLORS array, based on the position 
+
 for (i of pegs) {
     i.addEventListener('click', handlePegSelection)
 }
@@ -46,22 +48,27 @@ resetGameBtn.addEventListener('click', handleResetGame);
 init();
 
 function init() {
+    currentBoardRow = 0;
+
     // set the state to null for all 40 td
     guessesBoardState = Array(ROWS);
     for (let i = 0; i < ROWS; i++) {
-        guessesBoardState[i] = Array(COLUMNS).fill(INITIALVALUE);
+        guessesBoardState[i] = Array(COLUMNS).fill(INITIAL_VALUE);
     }
 
     // set the state to null for all 40 td
     cluesBoardState = Array(ROWS);
     for (let j = 0; j < ROWS; j++) {
-        cluesBoardState[j] = Array(COLUMNS).fill(INITIALVALUE);
+        cluesBoardState[j] = Array(COLUMNS).fill(INITIAL_VALUE);
+    }
+
+    cluesOutcome = Array(ROWS);
+    for (let j = 0; j < ROWS; j++) {
+        cluesOutcome[j] = Array(CLUES_OUTCOME_COLUMNS).fill(0);
     }
 
     // set the state to empty
     solutionBoardState = [];
-
-    clueOutcome = [0, 0, 0];
 
     // select 4 random peg colors and store them in an array
     for (let i = 0; i < 4; i++) {
@@ -76,7 +83,10 @@ function init() {
 }
 
 function handlePegSelection(e) {
-    const rowIdx = guessesBoardState[0];
+    // after I call the check function, increase the row number, use that number in the guessBoardState
+    // set the initial state for row at 0
+
+    const rowIdx = guessesBoardState[currentBoardRow];
     const cellIdx = rowIdx.indexOf(null);
 
     if (e.target.id === PEG_COLORS[0]) {
@@ -109,38 +119,40 @@ function handlePegSelection(e) {
     render();
 }
 
-// YOU ARE HERE. MAKE SURE DUPLICATES ARE ACCOUNTED FOR
 function handleGuessCheck() {
     previouslyGuessed = [];
-    guessesBoardState[0].forEach((guess, idx) => {
+    guessesBoardState[currentBoardRow].forEach((guess, idx) => {
         if (guess === solutionBoardState[idx]) {
-            clueOutcome[0]++;
-            cluesBoardState[0].shift();
-            cluesBoardState[0].push(CLUE_COLORS[0]);
+            cluesOutcome[currentBoardRow][0]++;
+            cluesBoardState[currentBoardRow].shift();
+            cluesBoardState[currentBoardRow].push(CLUE_COLORS[0]);
         } else if (solutionBoardState.includes(guess) && !(previouslyGuessed.includes(guess))) {
             previouslyGuessed.push(guess);
-            clueOutcome[1]++;
-            cluesBoardState[0].shift();
-            cluesBoardState[0].push(CLUE_COLORS[1]);
+            cluesOutcome[currentBoardRow][1]++;
+            cluesBoardState[currentBoardRow].shift();
+            cluesBoardState[currentBoardRow].push(CLUE_COLORS[1]);
         } else {
-            cluesBoardState[0].shift();
-            cluesBoardState[0].push(null);
-            clueOutcome[2]++
+            cluesBoardState[currentBoardRow].shift();
+            cluesBoardState[currentBoardRow].push(null);
+            cluesOutcome[currentBoardRow][2]++
         }
-        console.log(clueOutcome);
-        console.log(cluesBoardState[0]);
     })
+    console.log('Clues boardState --> ' + cluesBoardState[currentBoardRow]);
+    console.log('Clues outcome --> ' + cluesOutcome[currentBoardRow]);
+    currentBoardRow++;
     render();
 }
 
 function handleClearGuess() {
-    if (clueOutcome[0] === 0 && clueOutcome[1] === 0 && clueOutcome === 0) {
-        guessesBoardState[0] = Array(4).fill(INITIALVALUE);
+    if (cluesOutcome[currentBoardRow][0] === 0 &&
+        cluesOutcome[currentBoardRow][1] === 0 &&
+        cluesOutcome[currentBoardRow][2] === 0) {
+        guessesBoardState[currentBoardRow] = Array(4).fill(INITIAL_VALUE);
     } else {
         console.log('Cannot clear the guess')
     }
     render();
-    console.log(guessesBoardState[0]);
+    console.log(guessesBoardState[currentBoardRow]);
 }
 
 function handleResetGame() {
@@ -156,36 +168,40 @@ function render() {
     renderGameOutcome();
 }
 
+// assign rowcolumnID and match them up in the rowcolumns in the guessBoard state
+// first: setup the two forEach loops, make sure log in both of the numbers
+// - create 
 function renderSelectedPegOnGuessRow() {
     guessesGridSquares.forEach((squareEl, idx) => {
-        if (guessesBoardState[0][idx] === 'red') {
+        // add a forEach to go through 
+
+        console.log(squareEl);
+        if (guessesBoardState[idx] === 'red') {
             squareEl.className = 'red';
-        } else if (guessesBoardState[0][idx] === 'pink') {
+        } else if (guessesBoardState[idx] === 'pink') {
             squareEl.className = 'pink';
-        } else if (guessesBoardState[0][idx] === 'green') {
+        } else if (guessesBoardState[idx] === 'green') {
             squareEl.className = 'green';
-        } else if (guessesBoardState[0][idx] === 'blue') {
+        } else if (guessesBoardState[idx] === 'blue') {
             squareEl.className = 'blue';
-        } else if (guessesBoardState[0][idx] === 'purple') {
+        } else if (guessesBoardState[idx] === 'purple') {
             squareEl.className = 'purple';
-        } else if (guessesBoardState[0][idx] === 'yellow') {
+        } else if (guessesBoardState[idx] === 'yellow') {
             squareEl.className = 'yellow';
-        } else if (guessesBoardState[0][idx] === null) {
+        } else if (guessesBoardState[idx] === null) {
             squareEl.className = '';
         }
     })
 }
 
-// rename to renderOutcome or extract renderOutcome (separation of concerns?)
 function renderClues() {
     cluesGridSquares.forEach((squareEl, idx) => {
-        if (cluesBoardState[0][idx] === 'black') {
+        if (cluesBoardState[currentBoardRow][idx] === 'black') {
             squareEl.className = 'black';
-
-        } else if (cluesBoardState[0][idx] === 'white') {
+        } else if (cluesBoardState[currentBoardRow][idx] === 'white') {
             squareEl.className = 'white';
         }
-        else if (cluesBoardState[0][idx] === null) {
+        else if (cluesBoardState[currentBoardRow][idx] === null) {
             squareEl.className = '';
         }
     })
@@ -216,12 +232,12 @@ function renderSolution() {
 }
 
 function renderGameOutcome() {
-    if (clueOutcome[0] === 4) {
+    if (cluesOutcome[currentBoardRow][0] === 4) {
         renderSolution();
         renderMessage('Your guess is correct! You Win!');
         clearGuessBtn.disabled = true;
         checkGuessBtn.disabled = true;
-    } else if (clueOutcome[1] >= 1) {
+    } else if (cluesOutcome[currentBoardRow][1] >= 1) {
         renderMessage('Hmm, almost got it. Try again!');
     } else {
         renderMessage('');
@@ -268,6 +284,8 @@ MM-5 | As a Player, I want to reset the game so that I can start a new game
 
 MM-6 | As a Player, I want to be able to guess no more than 10 times so that I can guess enough tries to gues the solution 
 - Refine logic to allow more than 1 guess
+- BUG: Previous checked guess is not rendering
+- BUG: Clues are not rendering 
 
 DONE. MM-7 | As a Player, I want to see a message whether I guessed correctly so that I know when the game ends
 -   Display Outcome message after each check
