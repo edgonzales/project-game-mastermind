@@ -139,7 +139,7 @@ function handleGuessCheck() {
         }
     })
     console.log('Clues boardState --> ' + cluesBoardState[currentBoardRow]);
-    console.log('Clues outcome --> ' + cluesOutcome[currentBoardRow]);
+    console.log('Clues outcome --> ' + cluesOutcome[currentBoardRow][0]);
     currentBoardRow++;
     render();
 }
@@ -164,28 +164,24 @@ function handleResetGame() {
 }
 
 function render() {
+    renderMessage('');
     renderSelectedPegOnGuessRow();
     renderClues();
-    renderGameOutcome();
+    if (currentBoardRow > 0) renderGameOutcome();
+    
 }
 
-// assign rowcolumnID and match them up in the rowcolumns in the guessBoard state
-// first: setup the two forEach loops, make sure log in both of the numbers
-// - create 
 function renderSelectedPegOnGuessRow() {
     guesesGridRows.forEach((gridRow, idx) => {
         [...gridRow.children].forEach((square, squareIdx) => {
             square.className = guessesBoardState[idx][squareIdx];
         })
-        console.log(guessesBoardState[idx]);
     })
 }
 
 function renderClues() {
     cluesGridRows.forEach((gridRow, idx) => {
-        console.log(cluesGridRows);
         [...gridRow.children].forEach((square, squareIdx) => {
-            console.log([...gridRow.children]);
             square.className = cluesBoardState[idx][squareIdx];
         })
     })
@@ -196,7 +192,7 @@ function renderMessage(msg) {
 }
 
 function renderSolution() {
-    guessesGridRow1.forEach((squareEl, idx) => {
+    solutionsGridSquares.forEach((squareEl, idx) => {
         if (solutionBoardState[idx] === 'red') {
             squareEl.className = 'red';
         } else if (solutionBoardState[idx] === 'pink') {
@@ -216,12 +212,13 @@ function renderSolution() {
 }
 
 function renderGameOutcome() {
-    if (cluesOutcome[currentBoardRow][0] === 4) {
+    console.log(cluesOutcome[currentBoardRow][0]);
+    if (cluesOutcome[currentBoardRow - 1][0] === 4) {
         renderSolution();
         renderMessage('Your guess is correct! You Win!');
         clearGuessBtn.disabled = true;
         checkGuessBtn.disabled = true;
-    } else if (cluesOutcome[currentBoardRow][1] >= 1) {
+    } else if (cluesOutcome[currentBoardRow - 1][1] >= 1) {
         renderMessage('Hmm, almost got it. Try again!');
     } else {
         renderMessage('');
@@ -239,6 +236,7 @@ MM-1 | As a Player, I want to see the board so that I can begin the game
     - Set peg background-color to their actual title (i.e. red, green...)
     - freeze cells when btn/img changes
         - option: don't use btns, simply change the color of the cell/square
+    - highlight the current row
 
 DONE. MM-2 | As a Player, I want to select a peg to add to a guess row
 - DONE. Display 6 peg options of different colors
@@ -267,9 +265,10 @@ MM-5 | As a Player, I want to reset the game so that I can start a new game
 - DONE. Reset 1 row + clues + solution
 
 MM-6 | As a Player, I want to be able to guess no more than 10 times so that I can guess enough tries to gues the solution 
-- Refine logic to allow more than 1 guess
-- BUG: Previous checked guess is not rendering
-- BUG: Clues are not rendering 
+- DONE. Refine logic to allow more than 1 guess
+- DONE. BUG: Previous checked guess is not rendering
+- DONE. BUG: Clues are not rendering
+-  
 
 DONE. MM-7 | As a Player, I want to see a message whether I guessed correctly so that I know when the game ends
 -   Display Outcome message after each check
