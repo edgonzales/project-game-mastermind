@@ -76,9 +76,6 @@ function init() {
 }
 
 function handlePegSelection(e) {
-    // update guessesBoardState. if the e.target id includes red, then update the guessesBoardState with that color
-    // limit to the first 4 peg selections per guess
-
     const rowIdx = guessesBoardState[0];
     const cellIdx = rowIdx.indexOf(null);
 
@@ -101,79 +98,42 @@ function handlePegSelection(e) {
         rowIdx.splice(cellIdx, 1, PEG_COLORS[5]);
     }
 
+    // limit to the first 4 peg selections per guess
     if (!(rowIdx.includes(null))) {
         checkGuessBtn.disabled = false;
     }
+
+    clearGuessBtn.disabled = false;
 
     console.log(rowIdx);
     render();
 }
 
-//console.log(guessesBoardState[0].find((element) => element === 'red'));
-//console.log(guessesBoardState[0].findIndex(element) => element === 'red'))// try this <-----
-//console.log(guessesBoardState[0].indexOf('red'));
-//let redIndex = guessesBoardState[0].indexOf('red');
-
-const rowIdxClueBoard = cluesBoardState[0];
-const cellIdxClueBoard = rowIdxClueBoard.indexOf(null);
-
-
-
 // YOU ARE HERE. MAKE SURE DUPLICATES ARE ACCOUNTED FOR
-function checkClueOutcome() {
+function handleGuessCheck() {
     previouslyGuessed = [];
     guessesBoardState[0].forEach((guess, idx) => {
         if (guess === solutionBoardState[idx]) {
             clueOutcome[0]++;
-            // cluesBoardState[0].shift();
-            // cluesBoardState[0].push('black');
+            cluesBoardState[0].shift();
+            cluesBoardState[0].push(CLUE_COLORS[0]);
+            //rowIdxClueBoard.splice(cellIdxClueBoard, 1, CLUE_COLORS[0])
         } else if (solutionBoardState.includes(guess) && !(previouslyGuessed.includes(guess))) {
             previouslyGuessed.push(guess);
             clueOutcome[1]++;
-            // cluesBoardState[0].shift();
-            // cluesBoardState[0].push('white');
+            cluesBoardState[0].shift();
+            cluesBoardState[0].push(CLUE_COLORS[1]);
+            //rowIdxClueBoard.splice(cellIdxClueBoard, 1, CLUE_COLORS[1])
         } else {
+            cluesBoardState[0].shift();
+            cluesBoardState[0].push(null);
             clueOutcome[2]++
         }
+        console.log(clueOutcome);
+        console.log(cluesBoardState[0]);
     })
-    console.log(clueOutcome);
-    console.log(cluesBoardState[0]);
-}
-
-// an array within a function
-// string of red, next time 
-// includes 
-
-function handleGuessCheck() {
-    checkClueOutcome();
     render();
-
-    /*    
-    Notes from Hunter
-    - keep track of the correct and incorrect selections
-    - find()
-    - includes()
-    - track the guesses, to identify the duplicates. has this value already been used? if so, do not increase the 'match' count
-    - findIndex of 
-    - indexOf(): how to start the indexOf
-    */
-
-    // temp logic
-    // const compareExactMatchGuessWithSolution = (a, b) =>
-    //     a.length === b.length &&
-    //     a.every((element, index) => element === b[index])
-
-    // temp logic
-    // if (compareExactMatchGuessWithSolution(guessesBoardState[0], solutionBoardState)) {
-    //     cluesBoardState[0] = Array(4).fill(CLUE_COLORS[0]);
-    //     renderSolution();
-    // } 
 }
-
-// temp function
-// function findCommonElements(arr1, arr2) {
-//     return arr1.some(item => arr2.includes(item))
-// }
 
 function handleClearGuess() {
     guessesBoardState[0] = Array(4).fill(INITIALVALUE);
@@ -191,6 +151,7 @@ function handleResetGame() {
 function render() {
     renderSelectedPegOnGuessRow();
     renderClues();
+    renderGameOutcome();
 }
 
 function renderSelectedPegOnGuessRow() {
@@ -218,15 +179,12 @@ function renderClues() {
     cluesGridSquares.forEach((squareEl, idx) => {
         if (cluesBoardState[0][idx] === 'black') {
             squareEl.className = 'black';
-            //renderSolution();
-            //renderMessage('Your guess is correct! You Win!')
+
         } else if (cluesBoardState[0][idx] === 'white') {
             squareEl.className = 'white';
-            //renderMessage('Hmm, almost got it. Try again!')
         }
         else if (cluesBoardState[0][idx] === null) {
             squareEl.className = '';
-            //renderMessage('');
         }
     })
 }
@@ -255,6 +213,19 @@ function renderSolution() {
     })
 }
 
+function renderGameOutcome() {
+    if (clueOutcome[0] === 4) {
+        renderSolution();
+        renderMessage('Your guess is correct! You Win!');
+        clearGuessBtn.disabled = true;
+        checkGuessBtn.disabled = true;
+    } else if (clueOutcome[1] >= 1) {
+        renderMessage('Hmm, almost got it. Try again!');
+    } else {
+        renderMessage('')
+    }
+}
+
 /*
 ~~~~~~~~~~~USER STORIES~~~~~~~~~~~~~~~~~~
 MM-1 | As a Player, I want to see the board so that I can begin the game
@@ -272,12 +243,12 @@ DONE. MM-2 | As a Player, I want to select a peg to add to a guess row
 - DONE. When peg is selected, it shall display as part of a single guess in the guesses grid
 - DONE. Display selected peg sequentially
 
-MM-3 | As a Player, I want to check my guess so that I may gather clues for the solution
+DONE. MM-3 | As a Player, I want to check my guess so that I may gather clues for the solution
 - DONE. Limit 4 pegs per guess
     - DONE. Front end
     - DONE. Back end
 - DONE. If guess is correct, then show the solution, else keep the solution hidden
-- Compare row of pegs against solution pegs
+- DONE. Compare row of pegs against solution pegs
     - Display white in a clues box if peg color is correct but position is not
     - Display black in a clues box if peg color and position is correct
 - DONE. If 4 pegs are selected, enable Check button, otherwise disable it. 
