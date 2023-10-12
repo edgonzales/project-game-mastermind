@@ -20,7 +20,6 @@ let currentBoardRow;
 
 /*----- CACHED ELEMENTS  -----*/
 
-const gameBoard = document.querySelector('#game-board'); //so far, not using. remove?
 const pegs = document.querySelectorAll('.peg-btn');
 const checkGuessBtn = document.querySelector('#checkGuessBtn');
 const clearGuessBtn = document.querySelector('#clearGuessBtn');
@@ -84,9 +83,6 @@ function init() {
 }
 
 function handlePegSelection(e) {
-    // after I call the check function, increase the row number, use that number in the guessBoardState
-    // set the initial state for row at 0
-
     const rowIdx = guessesBoardState[currentBoardRow];
     const cellIdx = rowIdx.indexOf(null);
 
@@ -138,8 +134,6 @@ function handleGuessCheck() {
             cluesOutcome[currentBoardRow][2]++
         }
     })
-    console.log('Clues boardState --> ' + cluesBoardState[currentBoardRow]);
-    console.log('Clues outcome --> ' + cluesOutcome[currentBoardRow][0]);
     currentBoardRow++;
     render();
 }
@@ -168,7 +162,6 @@ function render() {
     renderSelectedPegOnGuessRow();
     renderClues();
     if (currentBoardRow > 0) renderGameOutcome();
-    
 }
 
 function renderSelectedPegOnGuessRow() {
@@ -224,54 +217,3 @@ function renderGameOutcome() {
         renderMessage('');
     }
 }
-
-/*
-~~~~~~~~~~~USER STORIES~~~~~~~~~~~~~~~~~~
-MM-1 | As a Player, I want to see the board so that I can begin the game
-- CSS/FE
-    - Move 'Outcome' to the bottom of the screen
-    - Check btn, Clear btn, Reset Game btn display as a column
-        - display: flex | flex-flow: column?
-    - Non header text should be larger
-    - Set peg background-color to their actual title (i.e. red, green...)
-    - freeze cells when btn/img changes
-        - option: don't use btns, simply change the color of the cell/square
-    - highlight the current row
-
-DONE. MM-2 | As a Player, I want to select a peg to add to a guess row
-- DONE. Display 6 peg options of different colors
-- DONE. When peg is selected, it shall display as part of a single guess in the guesses grid
-- DONE. Display selected peg sequentially
-
-DONE. MM-3 | As a Player, I want to check my guess so that I may gather clues for the solution
-- DONE. Limit 4 pegs per guess
-    - DONE. Front end
-    - DONE. Back end
-- DONE. If guess is correct, then show the solution, else keep the solution hidden
-- DONE. Compare row of pegs against solution pegs
-    - Display white in a clues box if peg color is correct but position is not
-    - Display black in a clues box if peg color and position is correct
-- DONE. If 4 pegs are selected, enable Check button, otherwise disable it. 
-
-MM-4 | As a Player, I want to clear my guess so that I can add new pegs
-- DONE. Clear a guess
-- Restrict: to only clearing 1 guess at a time
-- If clues are either black, white, or checked when Player clicks on Clear, then it shall be applied to the 
-    following guess row
-
-MM-5 | As a Player, I want to reset the game so that I can start a new game
-- DONE. Reset 1 row + no clues
-- DONE. Reset 1 row + clues
-- DONE. Reset 1 row + clues + solution
-
-MM-6 | As a Player, I want to be able to guess no more than 10 times so that I can guess enough tries to gues the solution 
-- DONE. Refine logic to allow more than 1 guess
-- DONE. BUG: Previous checked guess is not rendering
-- DONE. BUG: Clues are not rendering
--  
-
-DONE. MM-7 | As a Player, I want to see a message whether I guessed correctly so that I know when the game ends
--   Display Outcome message after each check
-    - Incorrect: 'Keep trying!'
-    - Correct: 'You guessed correctly!'
-*/
