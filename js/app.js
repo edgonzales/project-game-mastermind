@@ -26,7 +26,8 @@ const checkGuessBtn = document.querySelector('#checkGuessBtn');
 const clearGuessBtn = document.querySelector('#clearGuessBtn');
 const resetGameBtn = document.querySelector('#resetGameBtn');
 const guessesGridSquares = document.querySelectorAll('#guesses-grid tr td');
-const guessesGridRows = document.querySelectorAll('.rows > td');
+const guesesGridRows = document.querySelectorAll('#guesses-grid .row')
+const cluesGridRows = document.querySelectorAll('#clues-grid .row');
 const cluesGridSquares = document.querySelectorAll('#clues-grid tr td');
 const solutionsGridSquares = document.querySelectorAll('#solutions-grid tr td');
 const mssgEl = document.querySelector('#msg');
@@ -172,38 +173,21 @@ function render() {
 // first: setup the two forEach loops, make sure log in both of the numbers
 // - create 
 function renderSelectedPegOnGuessRow() {
-    guessesGridSquares.forEach((squareEl, idx) => {
-        // add a forEach to go through 
-
-        console.log(squareEl);
-        if (guessesBoardState[idx] === 'red') {
-            squareEl.className = 'red';
-        } else if (guessesBoardState[idx] === 'pink') {
-            squareEl.className = 'pink';
-        } else if (guessesBoardState[idx] === 'green') {
-            squareEl.className = 'green';
-        } else if (guessesBoardState[idx] === 'blue') {
-            squareEl.className = 'blue';
-        } else if (guessesBoardState[idx] === 'purple') {
-            squareEl.className = 'purple';
-        } else if (guessesBoardState[idx] === 'yellow') {
-            squareEl.className = 'yellow';
-        } else if (guessesBoardState[idx] === null) {
-            squareEl.className = '';
-        }
+    guesesGridRows.forEach((gridRow, idx) => {
+        [...gridRow.children].forEach((square, squareIdx) => {
+            square.className = guessesBoardState[idx][squareIdx];
+        })
+        console.log(guessesBoardState[idx]);
     })
 }
 
 function renderClues() {
-    cluesGridSquares.forEach((squareEl, idx) => {
-        if (cluesBoardState[currentBoardRow][idx] === 'black') {
-            squareEl.className = 'black';
-        } else if (cluesBoardState[currentBoardRow][idx] === 'white') {
-            squareEl.className = 'white';
-        }
-        else if (cluesBoardState[currentBoardRow][idx] === null) {
-            squareEl.className = '';
-        }
+    cluesGridRows.forEach((gridRow, idx) => {
+        console.log(cluesGridRows);
+        [...gridRow.children].forEach((square, squareIdx) => {
+            console.log([...gridRow.children]);
+            square.className = cluesBoardState[idx][squareIdx];
+        })
     })
 }
 
@@ -212,7 +196,7 @@ function renderMessage(msg) {
 }
 
 function renderSolution() {
-    solutionsGridSquares.forEach((squareEl, idx) => {
+    guessesGridRow1.forEach((squareEl, idx) => {
         if (solutionBoardState[idx] === 'red') {
             squareEl.className = 'red';
         } else if (solutionBoardState[idx] === 'pink') {
