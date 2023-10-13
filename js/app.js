@@ -3,8 +3,8 @@
 const MAX_GUESSES = 10; // 1 guess = a set of 4 pegs
 const PEG_COLORS = ['red', 'pink', 'green', 'blue', 'purple', 'yellow'];
 const CLUE_COLORS = ['black', 'white'];
-const ROWS = 10;
-const COLUMNS = 4;
+const ROWS = 10; // Guesses and Clues grid rows 
+const COLUMNS = 4; // Guesses and Clues grid rows
 const CLUES_OUTCOME_COLUMNS = 3;
 const INITIAL_VALUE = null;
 
@@ -34,10 +34,12 @@ const mssgEl = document.querySelector('#msg');
 
 /*----- EVENT LISTENERS -----*/
 
+// Event listens for click performed on any of the 6 pegs
 for (i of pegs) {
     i.addEventListener('click', handlePegSelection)
 }
 
+// Event listener for each of the buttons
 checkGuessBtn.addEventListener('click', handleGuessCheck);
 clearGuessBtn.addEventListener('click', handleClearGuess);
 resetGameBtn.addEventListener('click', handleResetGame);
@@ -45,6 +47,7 @@ resetGameBtn.addEventListener('click', handleResetGame);
 
 /*----- FUNCTIONS -----*/
 
+// Initialized the browser game
 init();
 
 function init() {
@@ -62,12 +65,13 @@ function init() {
         cluesBoardState[j] = Array(COLUMNS).fill(INITIAL_VALUE);
     }
 
+    // Set the state to 0 for all 30 arrays
     cluesOutcome = Array(ROWS);
     for (let j = 0; j < ROWS; j++) {
         cluesOutcome[j] = Array(CLUES_OUTCOME_COLUMNS).fill(0);
     }
 
-    // set the state to empty
+    // set the solution state to empty
     solutionBoardState = [];
 
     // select 4 random peg colors and store them in an array
