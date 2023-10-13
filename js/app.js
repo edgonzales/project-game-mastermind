@@ -1,6 +1,5 @@
 /*----- CONSTANTS -----*/
 
-const MAX_GUESSES = 10; // 1 guess = a set of 4 pegs
 const PEG_COLORS = ['red', 'pink', 'green', 'blue', 'purple', 'yellow'];
 const CLUE_COLORS = ['black', 'white'];
 const ROWS = 10; // Guesses and Clues grid rows 
@@ -47,7 +46,7 @@ resetGameBtn.addEventListener('click', handleResetGame);
 
 /*----- FUNCTIONS -----*/
 
-// Initialized the browser game
+// Initialize the browser game and sets the initial values for the state variables, then renders accordingly.
 init();
 
 function init() {
@@ -83,9 +82,9 @@ function init() {
     checkGuessBtn.disabled = true;
 
     render();
-    console.log(solutionBoardState);
 }
 
+// Looks at the id of what was clicked and updates the corresponding guessesBoardState row
 function handlePegSelection(e) {
     const rowIdx = guessesBoardState[currentBoardRow];
     const cellIdx = rowIdx.indexOf(null);
@@ -116,10 +115,10 @@ function handlePegSelection(e) {
 
     clearGuessBtn.disabled = false;
 
-    console.log(rowIdx);
     render();
 }
 
+// Compares the guess against the solution and outputs a clue
 function handleGuessCheck() {
     previouslyGuessed = [];
     guessesBoardState[currentBoardRow].forEach((guess, idx) => {
@@ -142,18 +141,19 @@ function handleGuessCheck() {
     render();
 }
 
+// Clears the guess if it has not been checked against the solution
 function handleClearGuess() {
     if (cluesOutcome[currentBoardRow][0] === 0 &&
         cluesOutcome[currentBoardRow][1] === 0 &&
         cluesOutcome[currentBoardRow][2] === 0) {
         guessesBoardState[currentBoardRow] = Array(4).fill(INITIAL_VALUE);
-    } else {
-        console.log('Cannot clear the guess')
-    }
+    } 
+
     render();
-    console.log(guessesBoardState[currentBoardRow]);
 }
 
+// No matter what state the board is in, this resets the game by clearing the classes in the HTML and
+// invoking the init function.
 function handleResetGame() {
     solutionsGridSquares.forEach((squareEl) => {
         squareEl.className = '';
@@ -161,6 +161,7 @@ function handleResetGame() {
     init();
 }
 
+// Renders the board according to the state variables.
 function render() {
     renderMessage('');
     renderSelectedPegOnGuessRow();
@@ -168,6 +169,8 @@ function render() {
     if (currentBoardRow > 0) renderGameOutcome();
 }
 
+// Loops through the guesses grid row and squares and updates the class name according to what the
+// guess board state
 function renderSelectedPegOnGuessRow() {
     guesesGridRows.forEach((gridRow, idx) => {
         [...gridRow.children].forEach((square, squareIdx) => {
@@ -176,6 +179,8 @@ function renderSelectedPegOnGuessRow() {
     })
 }
 
+// Loops through the clues grid row and squares and updates the class name according to what the
+// clues board state
 function renderClues() {
     cluesGridRows.forEach((gridRow, idx) => {
         [...gridRow.children].forEach((square, squareIdx) => {
@@ -184,10 +189,12 @@ function renderClues() {
     })
 }
 
+// Generic message render
 function renderMessage(msg) {
     mssgEl.innerText = msg;
 }
 
+// Renders the solution based on the solution state
 function renderSolution() {
     solutionsGridSquares.forEach((squareEl, idx) => {
         if (solutionBoardState[idx] === 'red') {
@@ -208,8 +215,8 @@ function renderSolution() {
     })
 }
 
+// Renders the messages and solution according to whether the player won the game.
 function renderGameOutcome() {
-    console.log(cluesOutcome[currentBoardRow][0]);
     if (cluesOutcome[currentBoardRow - 1][0] === 4) {
         renderSolution();
         renderMessage('Your guess is correct! You Win!');
