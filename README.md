@@ -6,8 +6,8 @@ Mastermind is a board game with an interesting history (or rather a legend?). So
 
 ## Screenshot
 
-![mmscreenshot](https://imgur.com/k25rPIA "Master Mind screenshot")
 
+![Screenshot](https://i.imgur.com/k25rPIAl.png "Game Screenshot")
 
 ## Technologies Used
 * JavaScript
@@ -21,10 +21,11 @@ https://edgonzales.github.io/project-game-mastermind/
 
 
 ## Next Steps: Planned future enhancements (icebox items)
+* Improve UX
 * Emoji version: use instead of pegs
 * Easy mode: less pegs
-* Hard mode: more pegs
 * Option to randomize peg colors
+* Hard mode: more pegs
 
 ## Credits
 * Jim Haff, instructor
