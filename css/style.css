@@ -1,89 +1,115 @@
+* {
+    box-sizing: border-box;
+}
 
-body{
+body {
     background-color: #581C1C;
     color: white;
 }
 
-h1{
+h1 {
     text-align: center;
 }
 
-main{
+main {
     display: grid;
     grid-template-columns: 3fr 2fr 3fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
     margin-left: 20px;
 }
 
-tr, td{
+tr,
+td {
     background-color: darkgrey;
 }
 
-#select-peg-grid{
+#select-peg-grid {
     background-color: darkgrey;
 }
 
-.peg-btn{
+.peg-btn {
     border-radius: 50%;
     border: none;
     padding: 15px;
 }
 
-table #center-col, table #right-col, table #solutions-grid{
+table #center-col,
+table #right-col,
+table #solutions-grid {
     display: grid;
     table-layout: fixed;
     width: 100%;
 }
 
-#center-col tr, #center-col td{
+#center-col tr,
+#center-col td {
     padding: 30px;
     border: 1px solid black;
     word-wrap: break-word;
 }
 
-#clues-grid tr, #clues-grid td{
+#clues-grid tr,
+#clues-grid td {
     padding: 13px;
     border: 1px solid black;
+}
+
+#clues-grid {
+
 }
 
 #selected-red-peg {
     padding: 15px;
 }
 
-#red, .red{
+#red,
+.red {
     background-color: #BD1414;
 }
 
-#pink, .pink{
+#pink,
+.pink {
     background-color: #E85959;
 }
-#green, .green{
+
+#green,
+.green {
     background-color: #298421;
 }
-#blue, .blue{
+
+#blue,
+.blue {
     background-color: #7E91D3;
 }
-#purple, .purple{
+
+#purple,
+.purple {
     background-color: #20146A;
 }
-#yellow, .yellow{
+
+#yellow,
+.yellow {
     background-color: #EFCB0F;
 }
 
-.black{
+.black {
     background-color: black;
 }
 
-.white{
+.white {
     background-color: white;
 }
 
-.peg-sm-btn{
+.peg-sm-btn {
     border-radius: 50%;
     border: none;
     padding: 5px;
 }
 
-#clue-black-peg{
+#clue-black-peg {
     background-color: black;
 }
 
+#clues-grid {
+
+}
