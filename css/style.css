@@ -1,10 +1,11 @@
 * {
     box-sizing: border-box;
+    font-family: monospace;
 }
 
 body {
-    background-color: #581C1C;
-    color: white;
+    background-color: white;
+    color: black;
 }
 
 h1 {
@@ -55,6 +56,7 @@ table #solutions-grid {
 }
 
 #clues-grid {
+    display: grid;
 
 }
 
