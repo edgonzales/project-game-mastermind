@@ -11,42 +11,39 @@
 
 <body>
     <h1>Master Mind</h1>
+    <div>Outcome
+        <p id="msg"></p>
+    </div>
+    <button id="checkGuessBtn">Check</button>
+    <button id="clearGuessBtn">Clear</button>
+    <button id="resetGameBtn">Reset Game</button>
+    <section id="peg-colors">Select Peg
+        <table id="select-peg-grid">
+            <tr>
+                <td>
+                    <button class="peg-btn" id="red"></button>
+                </td>
+                <td>
+                    <button class="peg-btn" id="pink"></button>
+                </td>
+                <td>
+                    <button class="peg-btn" id="green"></button>
+                </td>
+                <td>
+                    <button class="peg-btn" id="blue"></button>
+                </td>
+                <td>
+                    <button class="peg-btn" id="purple"></button>
+                </td>
+                <td>
+                    <button class="peg-btn" id="yellow"></button>
+                </td>
+            </tr>
+        </table>
+    </section>
     <main class="game-board">
-        <div id="left-col" class="column">
-            <div id="actions">
-                <section id="peg-colors">Select Peg
-                    <table id="select-peg-grid">
-                        <tr>
-                            <td>
-                                <button class="peg-btn" id="red"></button>
-                            </td>
-                            <td>
-                                <button class="peg-btn" id="pink"></button>
-                            </td>
-                            <td>
-                                <button class="peg-btn" id="green"></button>
-                            </td>
-                            <td>
-                                <button class="peg-btn" id="blue"></button>
-                            </td>
-                            <td>
-                                <button class="peg-btn" id="purple"></button>
-                            </td>
-                            <td>
-                                <button class="peg-btn" id="yellow"></button>
-                            </td>
-                        </tr>
-                    </table>
-                </section>
-                <button id="checkGuessBtn">Check</button>
-                <button id="clearGuessBtn">Clear</button>
-                <button id="resetGameBtn">Reset Game</button>
-            </div>
-            <div>Outcome
-                <p id="msg"></p>
-            </div>
-        </div>
-        <div id="center-col" class="column">
+
+        <div id="guesses-section">
             <table id="guesses-grid">Guesses
                 <tr class="row">
                     <td class="r1"></td>
@@ -118,7 +115,7 @@
                 </tr>
             </table>
         </div>
-        <div id="right-col" class="column">
+        <div id="clues-section">
             <table id="clues-grid">Clues
                 <tr class="row">
                     <td class="r1"></td>
@@ -179,7 +176,7 @@
                     <td class="r10"></td>
                     <td class="r10"></td>
                     <td class="r10"></td>
-                </tr>            
+                </tr>
             </table>
         </div>
     </main>
