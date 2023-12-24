@@ -7,7 +7,7 @@ Mastermind is a board game with an interesting history (or rather a legend?). So
 ## Screenshot
 
 
-![Screenshot](https://i.imgur.com/k25rPIAl.png "Game Screenshot")
+![Screenshot](https://i.imgur.com/kICCiku.png "Game Screenshot")
 
 ## Technologies Used
 * JavaScript
