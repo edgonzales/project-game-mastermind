@@ -28,6 +28,6 @@ https://edgonzales.github.io/project-game-mastermind/
 * Hard mode: more pegs
 
 ## Credits
-* Jim Haff, instructor
-* Megan Barber, associate instructor
+* Jim Haff, Instructor
+* Megan Barber, Associate Instructor
 * Hunter Long, TA
